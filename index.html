@@ -2,95 +2,77 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <title>منيو مطعمي</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو مطعمي - واتساب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Changa&display=swap" rel="stylesheet">
     <style>
-        body { background: #fdf2e9; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 80px; }
-        .menu-title { text-align: center; color: #e67e22; margin: 20px 0; }
-        .menu-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 10px; }
-        .food-card { background: white; width: 45%; max-width: 200px; border-radius: 15px; text-align: center; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .food-img { width: 100%; height: 120px; object-fit: cover; }
-        .add-btn { background: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Changa'; width: 90%; margin-bottom: 10px; }
-        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: right; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 5px 0 15px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Changa'; box-sizing: border-box; }
-        .order-btn { background: #25D366; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; }
+        body { font-family: 'Changa', sans-serif; background: #fdf2e9; margin: 0; padding: 10px; text-align: center; }
+        .food-card { background: white; border-radius: 15px; margin: 10px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .food-img { width: 100%; max-width: 250px; border-radius: 10px; }
+        .add-btn { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .cart-btn { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 15px; border-radius: 50px; cursor: pointer; z-index: 1000; }
+        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 80%; max-width: 400px; color: black; }
     </style>
 </head>
 <body>
 
-    <div class="floating-cart" onclick="openCart()">🛒 السلة (<span id="cart-count">0</span>)</div>
-    <h1 class="menu-title">قائمة الطعام 🍔🍕</h1>
-
-    <div class="menu-grid">
-        <div class="food-card">
-            <img src="https://img.freepik.com/free-photo/view-delicious-burger-with-fries-table_23-2150857832.jpg" class="food-img">
-            <div style="padding:10px;">
-                <h3>برجر لحم</h3>
-                <p>7,500 د.ع</p>
-                <button class="add-btn" onclick="addToCart('burger', 'برجر لحم', 7500)">إضافة +</button>
-            </div>
-        </div>
-        <div class="food-card">
-            <img src="https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2158.jpg" class="food-img">
-            <div style="padding:10px;">
-                <h3>بيتزا إيطالية</h3>
-                <p>10,000 د.ع</p>
-                <button class="add-btn" onclick="addToCart('pizza', 'بيتزا إيطالية', 10000)">إضافة +</button>
-            </div>
-        </div>
+    <h1>منيو المطعم 🍔</h1>
+    
+    <div class="food-card">
+        <img src="https://img.freepik.com/free-photo/view-delicious-burger-with-fries-table_23-2150857832.jpg" class="food-img">
+        <h3>برجر لحم</h3>
+        <p>7,500 د.ع</p>
+        <button class="add-btn" onclick="addToCart('برجر', 7500)">إضافة للسلة +</button>
     </div>
 
-    <div id="cart-modal" class="modal">
+    <div class="food-card">
+        <img src="https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2158.jpg" class="food-img">
+        <h3>بيتزا</h3>
+        <p>10,000 د.ع</p>
+        <button class="add-btn" onclick="addToCart('بيتزا', 10000)">إضافة للسلة +</button>
+    </div>
+
+    <div class="cart-btn" onclick="showCart()">🛒 السلة (<span id="count">0</span>)</div>
+
+    <div id="cart-modal">
         <div class="modal-content">
-            <h3>تفاصيل الطلب 🛍️</h3>
-            <div id="cart-items-list"></div>
-            <p><strong>المجموع: <span id="total-price">0</span> د.ع</strong></p>
-            <hr>
-            <label>رقم هاتف العميل:</label>
-            <input type="tel" id="cust-phone" placeholder="07XXXXXXXX">
-            <textarea id="order-notes" placeholder="ملاحظات إضافية (اختياري)"></textarea>
-            <button class="order-btn" onclick="confirmOrder()">إرسال الطلب عبر واتساب ✅</button>
-            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
+            <h3>طلباتك 🛍️</h3>
+            <div id="items"></div>
+            <p>المجموع: <span id="total">0</span> د.ع</p>
+            <input type="tel" id="phone" placeholder="رقمك" style="width:100%; margin-bottom:10px; padding:5px;">
+            <button onclick="send()" style="background:#25D366; color:white; border:none; padding:10px; width:100%;">تأكيد عبر واتساب</button>
+            <button onclick="hideCart()" style="margin-top:10px; border:none; background:none; color:red;">إغلاق</button>
         </div>
     </div>
 
     <script>
-        let cart = {};
-
-        function addToCart(id, name, price) {
-            if (cart[id]) { cart[id].qty++; } 
-            else { cart[id] = { name: name, price: price, qty: 1 }; }
-            updateUI();
+        let cart = [];
+        function addToCart(name, price) {
+            cart.push({name, price});
+            document.getElementById('count').innerText = cart.length;
+            alert("تمت إضافة " + name + " للسلة");
         }
-
-        function updateUI() {
-            const list = document.getElementById('cart-items-list');
-            list.innerHTML = "";
-            let count = 0, total = 0;
-            for (let id in cart) {
-                count += cart[id].qty;
-                total += cart[id].price * cart[id].qty;
-                list.innerHTML += `<div class="cart-item"><span>${cart[id].name} (x${cart[id].qty})</span><span>${(cart[id].price * cart[id].qty).toLocaleString()}</span></div>`;
-            }
-            document.getElementById('cart-count').innerText = count;
-            document.getElementById('total-price').innerText = total.toLocaleString();
+        function showCart() {
+            let html = "";
+            let total = 0;
+            cart.forEach(item => {
+                html += "<div>" + item.name + " - " + item.price + "</div>";
+                total += item.price;
+            });
+            document.getElementById('items').innerHTML = html;
+            document.getElementById('total').innerText = total;
+            document.getElementById('cart-modal').style.display = 'flex';
         }
-
-        function confirmOrder() {
-            const phone = document.getElementById('cust-phone').value;
-            const notes = document.getElementById('order-notes').value;
-            const total = document.getElementById('total-price').innerText;
-
-            if (Object.keys(cart).length === 0) { alert("السلة فارغة!"); return; }
-            if (phone.length < 10) { alert("اكتب رقم هاتف صحيح"); return; }
-
-            let msg = "*🛍️ طلب جديد من الموقع*\n\n";
-            for (let id in cart) {
-                msg += "• " + cart[id].name + " (العدد: " + cart[id].qty + ")\n";
-            }
-            msg += "\n*💰 المجموع:* " + total +
-                
+        function hideCart() { document.getElementById('cart-modal').style.display = 'none'; }
+        function send() {
+            let phone = document.getElementById('phone').value;
+            if(cart.length == 0 || phone == "") { alert("أضف طعام ورقمك"); return; }
+            let msg = "طلب جديد:\n";
+            cart.forEach(i => msg += "- " + i.name + "\n");
+            msg += "المجموع: " + document.getElementById('total').innerText + "\nالهاتف: " + phone;
+            window.open("https://wa.me/9647747231856?text=" + encodeURIComponent(msg));
+        }
+    </script>
+</body>
+</html>
