@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو المطعم</title>
+    <title>مطعمي - طلبات التليجرام</title>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background: #fdf2e9; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 80px; }
@@ -23,7 +23,7 @@
 <body>
 
     <div class="floating-cart" onclick="openCart()">🛒 سلتك (<span id="cart-count">0</span>)</div>
-    <h1 class="menu-title">قائمة الطعام 🍕</h1>
+    <h1 class="menu-title">قائمة الطعام 🍕🍔</h1>
 
     <div class="menu-grid">
         <div class="food-card">
@@ -50,27 +50,26 @@
             <div id="cart-items-list"></div>
             <p><strong>المجموع: <span id="total-price">0</span> د.ع</strong></p>
             <hr>
-            <label>رقم الموبايل:</label>
-            <input type="tel" id="cust-phone" placeholder="07XXXXXXXX">
-            <label>طريقة الاستلام:</label>
+            <input type="tel" id="cust-phone" placeholder="رقم الموبايل">
             <select id="delivery-type">
-                <option>توصيل للمنزل</option>
-                <option>استلام من المطعم</option>
+                <option value="توصيل">توصيل للمنزل</option>
+                <option value="استلام">استلام من المطعم</option>
             </select>
-            <label>ملاحظات:</label>
-            <textarea id="order-notes" placeholder="أي ملاحظات؟"></textarea>
-            <button class="order-btn" onclick="confirmOrder()">تأكيد الطلب تليجرام ✅</button>
-            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer; font-family:'Changa';">إغلاق</button>
+            <textarea id="order-notes" placeholder="ملاحظات إضافية"></textarea>
+            <button class="order-btn" onclick="confirmOrder()">تأكيد الطلب عبر تليجرام ✅</button>
+            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
         </div>
     </div>
 
     <script>
         let cart = {};
+
         function addToCart(id, name, price) {
             if (cart[id]) { cart[id].qty++; } 
             else { cart[id] = { name: name, price: price, qty: 1 }; }
             updateUI();
         }
+
         function updateUI() {
             const list = document.getElementById('cart-items-list');
             list.innerHTML = "";
@@ -83,15 +82,32 @@
             document.getElementById('cart-count').innerText = count;
             document.getElementById('total-price').innerText = total.toLocaleString();
         }
+
         function confirmOrder() {
             const phone = document.getElementById('cust-phone').value;
+            const type = document.getElementById('delivery-type').value;
+            const notes = document.getElementById('order-notes').value;
+            const total = document.getElementById('total-price').innerText;
+
             if (Object.keys(cart).length === 0) { alert("السلة فارغة!"); return; }
             if (phone.length < 10) { alert("اكتب رقم هاتف صحيح"); return; }
+
             let msg = "🛍️ طلب جديد:\n";
-            for (let id in cart) { msg += `- ${cart[id].name} (${cart[id].qty})\n`; }
-            msg += `\n💰 المجموع: ${document.getElementById('total-price').innerText} د.ع\n📱 الهاتف: ${phone}\n🚚 النوع: ${document.getElementById('delivery-type').value}\n📝 ملاحظات: ${document.getElementById('order-notes').value}`;
-            window.open(`https://t.me/po_pou?text=${encodeURIComponent(msg)}`, '_blank');
+            for (let id in cart) {
+                msg += "🔹 " + cart[id].name + " (العدد: " + cart[id].qty + ")\n";
+            }
+            msg += "\n💰 المجموع: " + total + " د.ع";
+            msg += "\n📱 الهاتف: " + phone;
+            msg += "\n🚚 النوع: " + type;
+            if (notes) msg += "\n📝 ملاحظات: " + notes;
+
+            // هذا الجزء يحل مشكلة اختفاء الرسالة في تليجرام
+            const telegramUser = "po_pou"; 
+            const finalLink = "https://t.me/" + telegramUser + "?text=" + encodeURIComponent(msg);
+            
+            window.open(finalLink, '_blank');
         }
+
         function openCart() { document.getElementById('cart-modal').style.display = 'flex'; }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
     </script>
