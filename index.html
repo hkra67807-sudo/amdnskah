@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعمي - طلبات التليجرام</title>
+    <title>منيو مطعمي - واتساب</title>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background: #fdf2e9; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 80px; }
@@ -12,18 +12,18 @@
         .food-card { background: white; width: 45%; max-width: 200px; border-radius: 15px; text-align: center; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .food-img { width: 100%; height: 120px; object-fit: cover; }
         .add-btn { background: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Changa'; width: 90%; margin-bottom: 10px; }
-        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: #e67e22; color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: right; }
         .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         input, select, textarea { width: 100%; padding: 10px; margin: 5px 0 15px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Changa'; box-sizing: border-box; }
-        .order-btn { background: #e67e22; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; }
+        .order-btn { background: #25D366; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="floating-cart" onclick="openCart()">🛒 سلتك (<span id="cart-count">0</span>)</div>
-    <h1 class="menu-title">قائمة الطعام 🍕🍔</h1>
+    <div class="floating-cart" onclick="openCart()">🛒 السلة (<span id="cart-count">0</span>)</div>
+    <h1 class="menu-title">قائمة الطعام 🍔🍕</h1>
 
     <div class="menu-grid">
         <div class="food-card">
@@ -50,13 +50,10 @@
             <div id="cart-items-list"></div>
             <p><strong>المجموع: <span id="total-price">0</span> د.ع</strong></p>
             <hr>
-            <input type="tel" id="cust-phone" placeholder="رقم الموبايل">
-            <select id="delivery-type">
-                <option value="توصيل">توصيل للمنزل</option>
-                <option value="استلام">استلام من المطعم</option>
-            </select>
-            <textarea id="order-notes" placeholder="ملاحظات إضافية"></textarea>
-            <button class="order-btn" onclick="confirmOrder()">تأكيد الطلب عبر تليجرام ✅</button>
+            <label>رقم هاتف العميل:</label>
+            <input type="tel" id="cust-phone" placeholder="07XXXXXXXX">
+            <textarea id="order-notes" placeholder="ملاحظات إضافية (اختياري)"></textarea>
+            <button class="order-btn" onclick="confirmOrder()">إرسال الطلب عبر واتساب ✅</button>
             <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
         </div>
     </div>
@@ -85,31 +82,15 @@
 
         function confirmOrder() {
             const phone = document.getElementById('cust-phone').value;
-            const type = document.getElementById('delivery-type').value;
             const notes = document.getElementById('order-notes').value;
             const total = document.getElementById('total-price').innerText;
 
             if (Object.keys(cart).length === 0) { alert("السلة فارغة!"); return; }
             if (phone.length < 10) { alert("اكتب رقم هاتف صحيح"); return; }
 
-            let msg = "🛍️ طلب جديد:\n";
+            let msg = "*🛍️ طلب جديد من الموقع*\n\n";
             for (let id in cart) {
-                msg += "🔹 " + cart[id].name + " (العدد: " + cart[id].qty + ")\n";
+                msg += "• " + cart[id].name + " (العدد: " + cart[id].qty + ")\n";
             }
-            msg += "\n💰 المجموع: " + total + " د.ع";
-            msg += "\n📱 الهاتف: " + phone;
-            msg += "\n🚚 النوع: " + type;
-            if (notes) msg += "\n📝 ملاحظات: " + notes;
-
-            // هذا الجزء يحل مشكلة اختفاء الرسالة في تليجرام
-            const telegramUser = "po_pou"; 
-            const finalLink = "https://t.me/" + telegramUser + "?text=" + encodeURIComponent(msg);
-            
-            window.open(finalLink, '_blank');
-        }
-
-        function openCart() { document.getElementById('cart-modal').style.display = 'flex'; }
-        function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
-    </script>
-</body>
-</html>
+            msg += "\n*💰 المجموع:* " + total +
+                
