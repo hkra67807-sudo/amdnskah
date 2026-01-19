@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو الطلبات السريع</title>
+    <title>منيو الطلبات</title>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { background: #fdf2e9; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 100px; }
         .menu-title { text-align: center; color: #e67e22; margin: 25px 0; font-size: 2.2em; }
         .menu-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 10px; }
-        .food-card { background: white; width: 45%; max-width: 250px; border-radius: 20px; text-align: center; overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+        .food-card { background: white; width: 45%; max-width: 250px; border-radius: 20px; text-align: center; overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.05); margin-bottom: 10px; }
         .food-img { width: 100%; height: 150px; object-fit: cover; }
         .food-info { padding: 10px; }
         .price { color: #e67e22; font-weight: bold; margin-bottom: 10px; display: block; }
         .add-btn { background: #2ecc71; color: white; border: none; padding: 8px; border-radius: 12px; cursor: pointer; font-family: 'Changa'; width: 100%; font-size: 0.9em; }
-        
         .floating-cart { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #2ecc71; color: white; padding: 12px 35px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4); font-weight: bold; }
-        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 20px; border-radius: 20px; width: 85%; max-width: 380px; text-align: right; }
         .cart-item { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; font-size: 0.9em; }
-        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid #ddd; font-family: 'Changa'; box-sizing: border-box; font-size: 1em; }
+        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid #ddd; font-family: 'Changa'; box-sizing: border-box; }
         .send-btn { background: #25D366; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; font-size: 1.1em; }
     </style>
 </head>
@@ -34,7 +32,7 @@
             <div class="food-info">
                 <h3>بيتزا إيطالية</h3>
                 <span class="price">10,000 د.ع</span>
-                <button class="add-btn" onclick="addToCart('بيتزا إيطالية', 10000)">إضافة للسلة +</button>
+                <button class="add-btn" onclick="addToCart('بيتزا إيطالية', 10000)">إضافة +</button>
             </div>
         </div>
 
@@ -43,7 +41,7 @@
             <div class="food-info">
                 <h3>برجر لحم</h3>
                 <span class="price">7,500 د.ع</span>
-                <button class="add-btn" onclick="addToCart('برجر لحم', 7500)">إضافة للسلة +</button>
+                <button class="add-btn" onclick="addToCart('برجر لحم', 7500)">إضافة +</button>
             </div>
         </div>
     </div>
@@ -57,9 +55,9 @@
             <h2 style="margin-top:0">طلباتك 🛍️</h2>
             <div id="items-list"></div>
             <p style="font-weight:bold;">المجموع: <span id="total-price">0</span> د.ع</p>
-            <input type="tel" id="cust-phone" placeholder="أدخل رقم موبايلك هنا">
+            <input type="tel" id="cust-phone" placeholder="أدخل رقمك للتواصل">
             <button class="send-btn" onclick="sendToWhatsApp()">إرسال الطلب واتساب ✅</button>
-            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer; font-family:'Changa';">إغلاق</button>
+            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
         </div>
     </div>
 
@@ -69,7 +67,7 @@
         function addToCart(name, price) {
             cart.push({ name, price });
             document.getElementById('cart-count').innerText = cart.length;
-            alert("تمت إضافة " + name + " للسلة ✅");
+            alert("تمت إضافة " + name + " ✅");
         }
 
         function openCart() {
@@ -89,15 +87,15 @@
 
         function sendToWhatsApp() {
             const phone = document.getElementById('cust-phone').value;
-            if (phone.trim().length < 10) {
-                alert("يرجى إدخال رقم هاتف صحيح يتكون من 10 أرقام على الأقل");
+            if (phone.trim() === "") {
+                alert("يرجى كتابة رقم هاتفك أولاً");
                 return;
             }
 
             let message = "*طلب جديد من الموقع:*\n";
             cart.forEach(item => { message += "- " + item.name + " (" + item.price.toLocaleString() + " د.ع)\n"; });
-            message += "\n*المجموع الإجمالي:* " + document.getElementById('total-price').innerText + " د.ع";
-            message += "\n*رقم موبايل الزبون:* " + phone;
+            message += "\n*المجموع:* " + document.getElementById('total-price').innerText + " د.ع";
+            message += "\n*رقم الزبون:* " + phone;
 
             const myNumber = "9647747231856"; 
             window.open("https://wa.me/" + myNumber + "?text=" + encodeURIComponent(message), "_blank");
