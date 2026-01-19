@@ -14,7 +14,8 @@
         .food-info { padding: 10px; }
         h3 { font-size: 1.1em; margin: 5px 0; }
         .price { color: #e67e22; font-weight: bold; margin-bottom: 8px; display: block; font-size: 1em; }
-        .add-btn { background: #2ecc71; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-family: 'Changa'; width: 100%; font-weight: bold; }
+        .add-btn { background: #2ecc71; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-family: 'Changa'; width: 100%; font-weight: bold; transition: 0.3s; }
+        .add-btn:active { transform: scale(0.9); background: #27ae60; }
         
         .floating-cart { position: fixed; bottom: 20px; right: 20px; background: #27ae60; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid white; }
         .cart-count { font-size: 0.8em; font-weight: bold; }
@@ -73,11 +74,9 @@
         <div class="modal-content">
             <h2 style="margin-top:0">سلة طلبات مطعم عمران 🛍️</h2>
             <div id="items-list"></div>
-            <p style="font-weight:bold; font-size: 1.2em; border-top: 2px solid #fdf2e9; pt-10px;">المجموع: <span id="total-price">0</span> د.ع</p>
-            
+            <p style="font-weight:bold; font-size: 1.2em; border-top: 2px solid #fdf2e9; padding-top:10px;">المجموع: <span id="total-price">0</span> د.ع</p>
             <textarea id="order-notes" placeholder="أضف ملاحظاتك هنا..."></textarea>
             <input type="tel" id="cust-phone" placeholder="رقم الموبايل">
-            
             <button class="send-btn" onclick="sendToWhatsApp()">إرسال الطلب واتساب ✅</button>
             <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer; font-family:'Changa';">إغلاق</button>
         </div>
@@ -93,7 +92,7 @@
                 cart[name] = { price: price, qty: 1 };
             }
             updateCartBadge();
-            alert("تمت إضافة " + name + " ✅");
+            // تم حذف الـ alert لضمان عدم ظهور الرسالة المزعجة
         }
 
         function updateQty(name, change) {
@@ -135,7 +134,7 @@
         }
 
         function openCart() {
-            if (Object.keys(cart).length === 0) { alert("السلة فارغة!"); return; }
+            if (Object.keys(cart).length === 0) { return; }
             renderCart();
             document.getElementById('cart-modal').style.display = 'flex';
         }
@@ -145,16 +144,11 @@
         function sendToWhatsApp() {
             const phone = document.getElementById('cust-phone').value;
             const notes = document.getElementById('order-notes').value;
-            if (phone.length < 10) { alert("يرجى إدخال رقم هاتف صحيح"); return; }
-            
-            let msg = "*طلب جديد من مطعم عمران:*\n\n";
-            for (let name in cart) {
-                msg += `• ${name} (العدد: ${cart[name].qty})\n`;
-            }
+            if (phone.length < 10) { return; }
+            let msg = "*طلب جديد لـ مطعم عمران:*\n\n";
+            for (let name in cart) { msg += `• ${name} (العدد: ${cart[name].qty})\n`; }
             if (notes) { msg += `\n*📝 ملاحظات:* ${notes}\n`; }
-            msg += `\n*💰 المجموع الإجمالي:* ${document.getElementById('total-price').innerText} د.ع`;
-            msg += `\n*📱 هاتف الزبون:* ${phone}`;
-            
+            msg += `\n*💰 المجموع:* ${document.getElementById('total-price').innerText} د.ع\n*📱 الهاتف:* ${phone}`;
             window.open("https://wa.me/9647747231856?text=" + encodeURIComponent(msg));
         }
     </script>
