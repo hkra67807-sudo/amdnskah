@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الابتسامة لطب الأسنان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ألوان العيادة: تدرجات التيركوز والأبيض لبيئة طب أسنان احترافية */
+        body { background: #f4f7f6; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 20px; }
+        .clinic-header { text-align: center; background: #0e8a8a; color: white; padding: 45px 10px; border-radius: 0 0 40px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .clinic-header h1 { margin: 0; font-size: 1.8em; }
+        .clinic-header p { margin: 10px 0 0; opacity: 0.9; font-size: 1em; }
+        
+        .services-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; padding: 20px 15px; }
+        .service-card { background: white; width: 46%; max-width: 200px; border-radius: 20px; text-align: center; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.05); border: 1px solid #e0e6e6; }
+        .service-icon { font-size: 2.8em; margin-bottom: 10px; display: block; }
+        .price { color: #16a085; font-weight: bold; display: block; margin: 10px 0; font-size: 1.1em; }
+        
+        .book-btn { background: #11a3a3; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-family: 'Changa'; font-weight: bold; transition: 0.3s; }
+        .book-btn:hover { background: #0e8a8a; }
+
+        .floating-booking { position: fixed; bottom: 25px; left: 25px; background: #e67e22; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2000; box-shadow: 0 5px 20px rgba(230, 126, 34, 0.4); font-weight: bold; font-size: 1.2em; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 25px; width: 88%; max-width: 420px; text-align: right; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #ced4da; font-family: 'Changa'; box-sizing: border-box; background: #fdfdfd; font-size: 0.95em; }
+        .confirm-btn { background: #25D366; color: white; border: none; padding: 16px; border-radius: 15px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; font-size: 1.1em; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="clinic-header">
+        <h1>مركز الابتسامة لطب الأسنان ✨</h1>
+        <p>نصنع ابتسامتك بأحدث تقنيات طب الأسنان</p>
+    </div>
+
+    <div class="services-grid">
+        <div class="service-card">
+            <span class="service-icon">🦷</span>
+            <h3>تنظيف وتلميع</h3>
+            <span class="price">25,000 د.ع</span>
+            <button class="book-btn" onclick="addToBooking('تنظيف وتلميع الأسنان')">حجز الموعد</button>
+        </div>
+
+        <div class="service-card">
+            <span class="service-icon">💎</span>
+            <h3>حشوة ضوئية</h3>
+            <span class="price">40,000 د.ع</span>
+            <button class="book-btn" onclick="addToBooking('حشوة ضوئية تجميلية')">حجز الموعد</button>
+        </div>
+
+        <div class="service-card">
+            <span class="service-icon">🏥</span>
+            <h3>قلع أسنان</h3>
+            <span class="price">20,000 د.ع</span>
+            <button class="book-btn" onclick="addToBooking('قلع سن')">حجز الموعد</button>
+        </div>
+
+        <div class="service-card">
+            <span class="service-icon">😁</span>
+            <h3>تبييض منزلي</h3>
+            <span class="price">150,000 د.ع</span>
+            <button class="book-btn" onclick="addToBooking('قوالب تبييض منزلي')">حجز الموعد</button>
+        </div>
+    </div>
+
+    <div class="floating-booking" onclick="openBooking()">
+        <span id="booking-count">0</span>
+    </div>
+
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-top:0; color: #0e8a8a;">بيانات الحجز 📅</h2>
+            <div id="booking-details" style="background: #eef7f7; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-right: 5px solid #0e8a8a;"></div>
+            
+            <input type="text" id="patient-name" placeholder="اسم المريض الثلاثي">
+            <input type="tel" id="patient-phone" placeholder="رقم الهاتف">
+            <input type="number" id="patient-age" placeholder="العمر">
+            <textarea id="patient-case" placeholder="هل تعاني من ألم معين؟ (اختياري)"></textarea>
+            
+            <button class="confirm-btn" onclick="sendToWhatsApp()">تأكيد عبر واتساب ✅</button>
+            <button onclick="closeBooking()" style="width:100%; background:none; border:none; color:#95a5a6; margin-top:15px; cursor:pointer; font-family:'Changa';">إلغاء</button>
+        </div>
+    </div>
+
+    <script>
+        let booking = null;
+
+        function addToBooking(name) {
+            booking = { name: name };
+            document.getElementById('booking-count').innerText = "1";
+            openBooking();
+        }
+
+        function openBooking() {
+            if (!booking) { alert("يرجى اختيار الخدمة أولاً"); return; }
+            document.getElementById('booking-details').innerHTML = `<p style="margin:0">الخدمة المختارة: <strong>${booking.name}</strong></p>`;
+            document.getElementById('booking-modal').style.display = 'flex';
+        }
+
+        function closeBooking() { document.getElementById('booking-modal').style.display = 'none'; }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('patient-name').value;
+            const phone = document.getElementById('patient-phone').value;
+            const age = document.getElementById('patient-age').value;
+            const caseDetail = document.getElementById('patient-case').value;
+            
+            if (!name || !phone || !age) { alert("يرجى ملئ كافة البيانات الأساسية"); return; }
+            
+            let msg = `*حجز موعد عيادة أسنان:*\n\n`;
+            msg += `🦷 *الخدمة:* ${booking.name}\n`;
+            msg += `👤 *المريض:* ${name}\n`;
+            msg += `📞 *الموبايل:* ${phone}\n`;
+            msg += `🎂 *العمر:* ${age}\n`;
+            if (caseDetail) msg += `📝 *ملاحظات:* ${caseDetail}\n`;
+            
+            // تم ضبط الرقم ليكون: 9647747231856
+            const myNumber = "9647747231856";
+            window.open(`https://wa.me/${myNumber}?text=` + encodeURIComponent(msg));
+        }
+    </script>
+</body>
+</html>
