@@ -21,10 +21,16 @@
         .cart-count { font-size: 0.8em; font-weight: bold; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 85%; max-width: 350px; text-align: right; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; font-size: 0.9em; }
-        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid #ddd; font-family: 'Changa'; box-sizing: border-box; }
-        .send-btn { background: #25D366; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 85%; max-width: 380px; text-align: right; max-height: 80vh; overflow-y: auto; }
+        
+        /* تحسين شكل عناصر السلة للتحكم بالكمية */
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: #e67e22; color: white; border: none; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; font-family: 'Changa'; box-sizing: border-box; }
+        textarea { resize: none; height: 80px; }
+        .send-btn { background: #25D366; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; font-size: 1.1em; }
     </style>
 </head>
 <body>
@@ -67,15 +73,6 @@
                 <button class="add-btn" onclick="addToCart('بيتزا إيطالية', 10000)">إضافة +</button>
             </div>
         </div>
-
-        <div class="food-card" style="width: 95%; max-width: 412px;">
-            <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?q=80&w=500" class="food-img">
-            <div class="food-info">
-                <h3>بيبسي بارد</h3>
-                <span class="price">500 د.ع</span>
-                <button class="add-btn" onclick="addToCart('بيبسي', 500)">إضافة +</button>
-            </div>
-        </div>
     </div>
 
     <div class="floating-cart" onclick="openCart()">
@@ -85,41 +82,94 @@
 
     <div id="cart-modal" class="modal">
         <div class="modal-content">
-            <h2 style="margin-top:0">سلة الطلب لـ مطعم عمران 🛍️</h2>
+            <h2 style="margin-top:0">سلة طلبات مطعم عمران 🛍️</h2>
             <div id="items-list"></div>
-            <p style="font-weight:bold;">المجموع: <span id="total-price">0</span> د.ع</p>
-            <input type="tel" id="cust-phone" placeholder="رقم موبايلك">
-            <button class="send-btn" onclick="sendToWhatsApp()">طلب عبر واتساب ✅</button>
+            <p style="font-weight:bold; font-size: 1.2em; border-top: 2px solid #fdf2e9; pt-10px;">المجموع: <span id="total-price">0</span> د.ع</p>
+            
+            <textarea id="order-notes" placeholder="أضف ملاحظاتك هنا (مثلاً: بدون بصل، زيادة شطة...)"></textarea>
+            <input type="tel" id="cust-phone" placeholder="رقم الموبايل للتواصل">
+            
+            <button class="send-btn" onclick="sendToWhatsApp()">إرسال الطلب واتساب ✅</button>
             <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer; font-family:'Changa';">إغلاق</button>
         </div>
     </div>
 
     <script>
-        let cart = [];
+        let cart = {};
+
         function addToCart(name, price) {
-            cart.push({ name, price });
-            document.getElementById('cart-count').innerText = cart.length;
+            if (cart[name]) {
+                cart[name].qty += 1;
+            } else {
+                cart[name] = { price: price, qty: 1 };
+            }
+            updateCartBadge();
             alert("تمت إضافة " + name + " ✅");
         }
-        function openCart() {
-            if (cart.length === 0) { alert("السلة فارغة!"); return; }
+
+        function updateQty(name, change) {
+            if (cart[name]) {
+                cart[name].qty += change;
+                if (cart[name].qty <= 0) {
+                    delete cart[name];
+                }
+                updateCartBadge();
+                renderCart();
+            }
+        }
+
+        function updateCartBadge() {
+            let totalQty = 0;
+            for (let item in cart) { totalQty += cart[item].qty; }
+            document.getElementById('cart-count').innerText = totalQty;
+        }
+
+        function renderCart() {
             const list = document.getElementById('items-list');
-            let total = 0; list.innerHTML = "";
-            cart.forEach(item => {
-                total += item.price;
-                list.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toLocaleString()}</span></div>`;
-            });
+            let total = 0;
+            list.innerHTML = "";
+            
+            for (let name in cart) {
+                let itemTotal = cart[name].price * cart[name].qty;
+                total += itemTotal;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${name}</strong><br>
+                            <small>${cart[name].price.toLocaleString()} د.ع</small>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty('${name}', -1)">-</button>
+                            <span>${cart[name].qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${name}', 1)">+</button>
+                        </div>
+                    </div>`;
+            }
             document.getElementById('total-price').innerText = total.toLocaleString();
+            if (total === 0) closeCart();
+        }
+
+        function openCart() {
+            if (Object.keys(cart).length === 0) { alert("السلة فارغة!"); return; }
+            renderCart();
             document.getElementById('cart-modal').style.display = 'flex';
         }
+
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
+
         function sendToWhatsApp() {
             const phone = document.getElementById('cust-phone').value;
+            const notes = document.getElementById('order-notes').value;
             if (phone.length < 10) { alert("يرجى إدخال رقم هاتف صحيح"); return; }
-            let msg = "*طلب جديد لـ مطعم عمران:*\n\n";
-            cart.forEach(item => { msg += "• " + item.name + "\n"; });
-            msg += "\n*💰 المجموع:* " + document.getElementById('total-price').innerText + " د.ع";
-            msg += "\n*📱 الرقم:* " + phone;
+            
+            let msg = "*طلب جديد من مطعم عمران:*\n\n";
+            for (let name in cart) {
+                msg += `• ${name} (العدد: ${cart[name].qty})\n`;
+            }
+            if (notes) { msg += `\n*📝 ملاحظات:* ${notes}\n`; }
+            msg += `\n*💰 المجموع الإجمالي:* ${document.getElementById('total-price').innerText} د.ع`;
+            msg += `\n*📱 هاتف الزبون:* ${phone}`;
+            
             window.open("https://wa.me/9647747231856?text=" + encodeURIComponent(msg));
         }
     </script>
