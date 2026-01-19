@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو المطعم</title>
+    <title>مطعمي الاحترافي</title>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #fdf2e9; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 80px; }
-        .menu-title { text-align: center; color: #e67e22; margin: 20px 0; }
-        .menu-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 10px; }
-        .food-card { background: white; width: 45%; max-width: 200px; border-radius: 15px; text-align: center; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .food-img { width: 100%; height: 120px; object-fit: cover; }
-        .food-info { padding: 10px; }
-        .food-info h3 { font-size: 1.1em; margin: 5px 0; }
-        .add-btn { background: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Changa'; width: 90%; margin-bottom: 10px; }
+        body { background: #fdf2e9; font-family: 'Changa', sans-serif; direction: rtl; margin: 0; padding-bottom: 20px; }
+        .menu-title { text-align: center; color: #e67e22; margin: 30px 0; }
+        .menu-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 10px; }
+        .food-card { background: white; width: 280px; border-radius: 20px; text-align: center; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .food-card:hover { transform: translateY(-5px); }
+        .food-img { width: 100%; height: 180px; object-fit: cover; }
+        .food-info { padding: 15px; }
+        .add-btn { background: #27ae60; color: white; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-family: 'Changa'; font-weight: bold; width: 80%; margin-bottom: 15px; }
         
         /* السلة */
-        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: #e67e22; color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: right; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 5px 0 15px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Changa'; }
-        .order-btn { background: #e67e22; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; }
+        .floating-cart { position: fixed; bottom: 20px; left: 20px; background: #e67e22; color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; z-index: 100; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 25px; width: 90%; max-width: 450px; text-align: right; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 10px; }
+        .qty-btn { background: #ddd; border: none; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; }
+        
+        input, select, textarea { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #eee; margin-bottom: 15px; font-family: 'Changa'; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #e67e22; }
+        .confirm-btn { background: #e67e22; color: white; border: none; padding: 15px; border-radius: 15px; width: 100%; cursor: pointer; font-size: 1.2em; font-weight: bold; font-family: 'Changa'; }
     </style>
 </head>
 <body>
 
     <div class="floating-cart" onclick="openCart()">🛒 سلتك (<span id="cart-count">0</span>)</div>
-    <h1 class="menu-title">قائمة الطعام 🍕</h1>
-
+    <h1 class="menu-title">قائمة الطعام 🍕🍔</h1>
+    
     <div class="menu-grid">
         <div class="food-card">
             <img src="https://img.freepik.com/free-photo/view-delicious-burger-with-fries-table_23-2150857832.jpg" class="food-img">
             <div class="food-info">
-                <h3>برجر لحم</h3>
+                <h3>برجر لحم مشوي</h3>
                 <p>7,500 د.ع</p>
                 <button class="add-btn" onclick="addToCart('burger', 'برجر لحم', 7500)">إضافة +</button>
             </div>
@@ -41,61 +44,90 @@
         <div class="food-card">
             <img src="https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2158.jpg" class="food-img">
             <div class="food-info">
-                <h3>بيتزا إيطالية</h3>
+                <h3>بيتزا سوبريم</h3>
                 <p>10,000 د.ع</p>
-                <button class="add-btn" onclick="addToCart('pizza', 'بيتزا إيطالية', 10000)">إضافة +</button>
+                <button class="add-btn" onclick="addToCart('pizza', 'بيتزا سوبريم', 10000)">إضافة +</button>
             </div>
         </div>
     </div>
 
     <div id="cart-modal" class="modal">
         <div class="modal-content">
-            <h3>تفاصيل الطلب 🛍️</h3>
-            <div id="cart-items-list"></div>
-            <p><strong>المجموع: <span id="total-price">0</span> د.ع</strong></p>
-            <hr>
-            <label>رقم الموبايل:</label>
-            <input type="tel" id="cust-phone" placeholder="07XXXXXXXX">
-            <label>طريقة الاستلام:</label>
+            <h2 style="margin-top:0">تفاصيل الطلب 🛍️</h2>
+            <div id="cart-items-list" style="max-height: 200px; overflow-y: auto;"></div>
+            <p style="font-size: 1.2em; font-weight: bold; color: #e67e22;">المجموع: <span id="total-price">0</span> د.ع</p>
+            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+            
+            <input type="tel" id="cust-phone" placeholder="رقم الموبايل (مثلاً: 07XXXXXXXX)">
             <select id="delivery-type">
-                <option>توصيل للمنزل</option>
-                <option>استلام من المطعم</option>
+                <option value="توصيل للمنزل">توصيل للمنزل 🏠</option>
+                <option value="استلام من المطعم">استلام من المطعم 🏃‍♂️</option>
             </select>
-            <label>ملاحظات:</label>
-            <textarea id="order-notes" placeholder="مثلاً: بدون بصل"></textarea>
-            <button class="order-btn" onclick="confirmOrder()">تأكيد الطلب تليجرام ✅</button>
-            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:gray; margin-top:10px; cursor:pointer;">إغلاق</button>
+            <textarea id="order-notes" rows="2" placeholder="أي ملاحظات إضافية؟"></textarea>
+
+            <button class="confirm-btn" onclick="confirmOrder()">تأكيد الطلب عبر تليجرام ✅</button>
+            <button onclick="closeCart()" style="width:100%; background:none; border:none; color:#888; margin-top:10px; cursor:pointer; font-family:'Changa';">إغلاق</button>
         </div>
     </div>
 
     <script>
         let cart = {};
+
         function addToCart(id, name, price) {
             if (cart[id]) { cart[id].qty++; } 
             else { cart[id] = { name: name, price: price, qty: 1 }; }
             updateUI();
         }
+
+        function changeQty(id, delta) {
+            if (cart[id]) {
+                cart[id].qty += delta;
+                if (cart[id].qty <= 0) delete cart[id];
+                updateUI();
+            }
+        }
+
         function updateUI() {
             const list = document.getElementById('cart-items-list');
             list.innerHTML = "";
             let count = 0, total = 0;
             for (let id in cart) {
                 count += cart[id].qty;
-                total += cart[id].price * cart[id].qty;
-                list.innerHTML += `<div class="cart-item"><span>${cart[id].name} (x${cart[id].qty})</span><span>${(cart[id].price * cart[id].qty).toLocaleString()}</span></div>`;
+                let itemTotal = cart[id].price * cart[id].qty;
+                total += itemTotal;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <span><strong>${cart[id].name}</strong></span>
+                        <div>
+                            <button class="qty-btn" onclick="changeQty('${id}', -1)">-</button>
+                            <span style="margin:0 8px">${cart[id].qty}</span>
+                            <button class="qty-btn" onclick="changeQty('${id}', 1)">+</button>
+                        </div>
+                        <span>${itemTotal.toLocaleString()}</span>
+                    </div>`;
             }
             document.getElementById('cart-count').innerText = count;
             document.getElementById('total-price').innerText = total.toLocaleString();
         }
+
         function confirmOrder() {
             const phone = document.getElementById('cust-phone').value;
+            const type = document.getElementById('delivery-type').value;
+            const notes = document.getElementById('order-notes').value;
+            const total = document.getElementById('total-price').innerText;
+
             if (Object.keys(cart).length === 0) { alert("السلة فارغة!"); return; }
-            if (phone.length < 10) { alert("اكتب رقم هاتف صحيح"); return; }
-            let msg = "🛍️ طلب جديد:\n";
-            for (let id in cart) { msg += `- ${cart[id].name} (${cart[id].qty})\n`; }
-            msg += `\n💰 المجموع: ${document.getElementById('total-price').innerText} د.ع\n📱 الهاتف: ${phone}\n🚚 النوع: ${document.getElementById('delivery-type').value}\n📝 ملاحظات: ${document.getElementById('order-notes').value}`;
+            if (phone.length < 10) { alert("يرجى إدخال رقم هاتف صحيح"); return; }
+
+            let msg = "🛍️ *طلب جديد من الموقع* \n\n";
+            for (let id in cart) { msg += `🔹 ${cart[id].name} (العدد: ${cart[id].qty})\n`; }
+            msg += `\n💰 *المجموع:* ${total} د.ع\n📱 *الرقم:* ${phone}\n🚚 *النوع:* ${type}`;
+            if (notes) msg += `\n📝 *ملاحظات:* ${notes}`;
+
             window.open(`https://t.me/po_pou?text=${encodeURIComponent(msg)}`, '_blank');
+            cart = {}; updateUI(); closeCart();
         }
+
         function openCart() { document.getElementById('cart-modal').style.display = 'flex'; }
         function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
     </script>
