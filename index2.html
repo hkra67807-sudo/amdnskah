@@ -3,178 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز الابتسامة التخصصي | نظام الحجز الذكي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>مركز الابتسامة 3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0e8a8a;
-            --secondary-color: #25D366;
-            --bg-color: #f4f7f6;
-            --text-dark: #2c3e50;
+            --bg: #e0e5ec;
+            --primary: #0e8a8a;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
         }
 
         body { 
-            background: var(--bg-color); 
+            background-color: var(--bg); 
             font-family: 'Changa', sans-serif; 
-            margin: 0; 
-            padding-bottom: 50px;
+            margin: 0; padding: 10px;
         }
 
-        /* الملاحة */
-        .navbar { 
-            background: var(--primary-color); 
-            padding: 15px 0; 
-            text-align: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .navbar a { color: white; margin: 0 15px; text-decoration: none; font-weight: 600; cursor: pointer; }
-
-        /* التحكم في الصفحات */
-        .page { display: none; padding: 30px 15px; min-height: 80vh; animation: fadeIn 0.4s ease-in-out; }
-        .active-page { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* حاوية بتصميم 3D */
+        .container {
+            max-width: 500px;
+            margin: auto;
         }
 
-        /* الصفحة الرئيسية - قسم الدكتور */
-        .hero { 
-            text-align: center; 
-            background: white; 
-            padding: 40px 20px; 
-            border-radius: 30px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 600px;
-            margin: 20px auto;
+        /* نافبار 3D */
+        .navbar {
+            display: flex; justify-content: space-around;
+            background: var(--bg);
+            padding: 15px; border-radius: 20px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            margin-bottom: 30px;
         }
-        
-        .doctor-box {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
+        .navbar a { text-decoration: none; color: var(--primary); font-weight: bold; cursor: pointer; }
+
+        /* البطاقات ثلاثية الأبعاد */
+        .card-3d {
+            background: var(--bg);
+            padding: 25px; border-radius: 30px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            text-align: center; margin-bottom: 25px;
+            transition: all 0.3s ease;
         }
 
-        .doctor-img {
-            width: 180px;
-            height: 180px;
+        /* تأثير الصورة المجسمة */
+        .doctor-avatar {
+            width: 150px; height: 150px;
             border-radius: 50%;
-            border: 6px solid #fff;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            object-fit: cover;
-            background: #e0f2f2;
+            background: var(--bg);
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+            padding: 10px; margin: auto;
+        }
+        .doctor-avatar img { width: 100%; border-radius: 50%; filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.2)); }
+
+        /* أزرار 3D تضغط للداخل */
+        .btn-3d {
+            background: var(--bg);
+            border: none; padding: 12px 30px; border-radius: 15px;
+            color: var(--primary); font-weight: bold; font-family: 'Changa';
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            cursor: pointer; transition: 0.2s; width: 100%; margin-top: 10px;
+        }
+        .btn-3d:active {
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            transform: scale(0.98);
         }
 
-        .badge {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: var(--secondary-color);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
+        /* مدخلات النصوص 3D */
+        input {
+            width: 100%; border: none; padding: 15px; border-radius: 15px;
+            background: var(--bg); box-sizing: border-box;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            margin-bottom: 15px; font-family: 'Changa'; outline: none;
         }
 
-        /* رسالة الترحيب */
-        .welcome-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        .welcome-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 300px;
-            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        /* الأزرار والخدمات */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 20px; border-radius: 20px; text-align: center; border: 1px solid #eee; }
-        .btn { background: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; cursor: pointer; font-family: 'Changa'; font-weight: bold; }
-        .btn-wa { background: var(--secondary-color); }
-
-        input, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Changa'; box-sizing: border-box; }
+        .page { display: none; }
+        .active-page { display: block; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="welcome" class="welcome-overlay">
-        <div class="welcome-card">
-            <h2 style="color: var(--primary-color); margin-top:0">أهلاً بك! 👋</h2>
-            <p>نحن في مركز الابتسامة جاهزون لخدمتك بأفضل التقنيات.</p>
-            <button class="btn" onclick="closeWelcome()">ابدأ الآن</button>
+<div class="container">
+    <nav class="navbar">
+        <a onclick="show('home')">الرئيسية</a>
+        <a onclick="show('services')">الخدمات</a>
+        <a onclick="show('book')">حجز</a>
+    </nav>
+
+    <div id="home" class="page active-page">
+        <div class="card-3d">
+            <div class="doctor-avatar">
+                <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor">
+            </div>
+            <h2 style="color: var(--primary);">أهلاً بك في عالم الابتسامة</h2>
+            <p>عيادة متطورة بأحدث تقنيات الـ 3D</p>
+            <button class="btn-3d" onclick="show('services')">ابدأ رحلتك</button>
         </div>
     </div>
 
-    <nav class="navbar">
-        <a onclick="show('home')">الرئيسية</a>
-        <a onclick="show('services')">خدماتنا</a>
-        <a onclick="show('book')">حجز موعد</a>
-    </nav>
-
-    <section id="home" class="page active-page">
-        <div class="hero">
-            <div class="doctor-box">
-                <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor" class="doctor-img">
-                <div class="badge">متصل الآن ✅</div>
-            </div>
-            <h1>مركز الابتسامة التخصصي ✨</h1>
-            <p>نحن هنا لنعتني بابتسامتك بأفضل التقنيات الحديثة، بإشراف كادر طبي متميز.</p>
-            <button class="btn" style="width:auto; padding:12px 30px" onclick="show('services')">اكتشف خدماتنا</button>
+    <div id="services" class="page">
+        <div class="card-3d">
+            <h3>🦷 تنظيف وتلميع</h3>
+            <button class="btn-3d" onclick="show('book')">حجز موعد</button>
         </div>
-    </section>
-
-    <section id="services" class="page">
-        <h2 style="text-align:center; color: var(--primary-color)">خدماتنا المتميزة</h2>
-        <div class="services-grid">
-            <div class="card"><span>🦷</span><h3>تنظيف</h3><button class="btn" onclick="show('book')">حجز</button></div>
-            <div class="card"><span>💎</span><h3>تبييض</h3><button class="btn" onclick="show('book')">حجز</button></div>
-            <div class="card"><span>🏥</span><h3>زراعة</h3><button class="btn" onclick="show('book')">حجز</button></div>
+        <div class="card-3d">
+            <h3>💎 تبييض ليزر</h3>
+            <button class="btn-3d" onclick="show('book')">حجز موعد</button>
         </div>
-    </section>
+    </div>
 
-    <section id="book" class="page">
-        <div style="background: white; max-width: 450px; margin: 0 auto; padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
-            <h2 style="text-align:center; margin-top:0">تأكيد الحجز 📅</h2>
-            <input type="text" id="name" placeholder="الاسم الكامل">
-            <input type="tel" id="phone" placeholder="رقم الموبايل">
-            <textarea id="msg" placeholder="نوع الخدمة أو الملاحظات"></textarea>
-            <button class="btn btn-wa" onclick="send()">إرسال عبر واتساب ✅</button>
+    <div id="book" class="page">
+        <div class="card-3d">
+            <h3>بيانات الحجز 📅</h3>
+            <input type="text" id="name" placeholder="اسمك الكريم">
+            <input type="tel" id="phone" placeholder="رقم موبايلك">
+            <button class="btn-3d" style="background: #25D366; color: white;" onclick="send()">إرسال واتساب</button>
         </div>
-    </section>
+    </div>
+</div>
 
-    <script>
-        function closeWelcome() {
-            document.getElementById('welcome').style.display = 'none';
-        }
+<script>
+    function show(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
+    }
+    function send() {
+        const n = document.getElementById('name').value;
+        const p = document.getElementById('phone').value;
+        if(!n || !p) { alert("امسح البيانات واملأها من جديد"); return; }
+        window.open(`https://wa.me/9647747231856?text=حجز جديد: ${n} - ${p}`);
+    }
+</script>
 
-        function show(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(id).classList.add('active-page');
-            window.scrollTo(0,0);
-        }
-
-        function send() {
-            const n = document.getElementById('name').value;
-            const p = document.getElementById('phone').value;
-            const m = document.getElementById('msg').value;
-            if(!n || !p) { alert("يرجى ملء البيانات المطلوبة"); return; }
-            const text = `*حجز جديد من الموقع*\nالاسم: ${n}\nالهاتف: ${p}\nالخدمة: ${m}`;
-            window.open(`https://wa.me/9647747231856?text=${encodeURIComponent(text)}`);
-        }
-    </script>
 </body>
 </html>
