@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الابتسامة التخصصي | نظام الحجز الذكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0e8a8a;
+            --secondary-color: #25D366;
+            --bg-color: #f4f7f6;
+            --text-dark: #2c3e50;
+        }
+
+        body { 
+            background: var(--bg-color); 
+            font-family: 'Changa', sans-serif; 
+            margin: 0; 
+            padding-bottom: 50px;
+        }
+
+        /* نظام الملاحة - Navbar */
+        .navbar { 
+            background: var(--primary-color); 
+            padding: 15px 0; 
+            text-align: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .navbar a { 
+            color: white; 
+            margin: 0 15px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .navbar a:hover { color: var(--secondary-color); }
+
+        /* التحكم في الصفحات */
+        .page { display: none; padding: 30px 15px; min-height: 80vh; animation: fadeIn 0.4s ease-in-out; }
+        .active-page { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الصفحة الرئيسية */
+        .hero { 
+            text-align: center; 
+            background: white; 
+            padding: 50px 20px; 
+            border-radius: 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .hero h1 { color: var(--primary-color); font-size: 2em; }
+
+        /* شبكة الخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .card span { font-size: 3em; display: block; margin-bottom: 10px; }
+
+        /* نموذج الحجز */
+        .booking-container {
+            background: white;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-family: 'Changa';
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Changa';
+            font-size: 1.1em;
+        }
+        .btn-wa { background: var(--secondary-color); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a onclick="show('home')">الرئيسية</a>
+        <a onclick="show('services')">خدماتنا</a>
+        <a onclick="show('book')">حجز موعد</a>
+    </nav>
+
+    <section id="home" class="page active-page">
+        <div class="hero">
+            <h1>مركز الابتسامة التخصصي ✨</h1>
+            <p>نحن هنا لنعتني بابتسامتك بأفضل التقنيات الحديثة.</p>
+            <button class="btn" style="width:auto; padding:10px 30px" onclick="show('services')">تصفح الخدمات</button>
+        </div>
+    </section>
+
+    <section id="services" class="page">
+        <h2 style="text-align:center; color: var(--primary-color)">خدماتنا المتميزة</h2>
+        <div class="services-grid">
+            <div class="card">
+                <span>🦷</span>
+                <h3>تنظيف</h3>
+                <button class="btn" onclick="show('book')">حجز</button>
+            </div>
+            <div class="card">
+                <span>💎</span>
+                <h3>تبييض</h3>
+                <button class="btn" onclick="show('book')">حجز</button>
+            </div>
+            <div class="card">
+                <span>🏥</span>
+                <h3>زراعة</h3>
+                <button class="btn" onclick="show('book')">حجز</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="book" class="page">
+        <div class="booking-container">
+            <h2 style="text-align:center; margin-top:0">تأكيد الحجز 📅</h2>
+            <input type="text" id="name" placeholder="الاسم الكامل">
+            <input type="tel" id="phone" placeholder="رقم الموبايل">
+            <textarea id="msg" placeholder="نوع الخدمة أو الملاحظات"></textarea>
+            <button class="btn btn-wa" onclick="send()">إرسال عبر واتساب ✅</button>
+        </div>
+    </section>
+
+    <script>
+        function show(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(id).classList.add('active-page');
+            window.scrollTo(0,0);
+        }
+
+        function send() {
+            const n = document.getElementById('name').value;
+            const p = document.getElementById('phone').value;
+            const m = document.getElementById('msg').value;
+            if(!n || !p) { alert("امسح البيانات المطلوبة"); return; }
+            const text = `*حجز جديد من الموقع*\nالاسم: ${n}\nالهاتف: ${p}\nالخدمة: ${m}`;
+            window.open(`https://wa.me/9647747231856?text=${encodeURIComponent(text)}`);
+        }
+    </script>
+</body>
+</html>
