@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز الابتسامة الملكي - نظام الحجز الذكي</title>
+    <title>مركز الابتسامة الملكي - الإصدار الاحترافي</title>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,42 +12,52 @@
             --gold: #d4ac0d;
             --shadow-dark: #cbd5e0;
             --shadow-light: #ffffff;
-            --success-green: #25D366;
+            --text-color: #2c3e50;
+        }
+
+        /* إعدادات الوضع المظلم */
+        .dark-mode {
+            --bg-color: #1a202c;
+            --main-blue: #63b3ed;
+            --gold: #f6ad55;
+            --shadow-dark: #0d1117;
+            --shadow-light: #2d3748;
+            --text-color: #e2e8f0;
         }
 
         body { 
             background-color: var(--bg-color); 
             font-family: 'Changa', sans-serif; 
             margin: 0; padding: 10px;
-            color: #2c3e50;
-            overflow-x: hidden;
+            color: var(--text-color);
+            transition: all 0.4s ease;
         }
 
         .container { max-width: 480px; margin: auto; padding-top: 20px; }
 
-        /* Navigation Bar Enhanced */
+        /* زر تبديل الوضع */
+        .theme-toggle {
+            position: fixed; bottom: 20px; left: 20px;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--main-blue); color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000; border: none; font-size: 20px;
+        }
+
         .navbar {
             display: flex; justify-content: space-around; 
-            background: var(--bg-color);
-            padding: 15px; border-radius: 25px;
+            background: var(--bg-color); padding: 15px; border-radius: 25px;
             box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             margin-bottom: 30px;
-            position: sticky; top: 10px; z-index: 100;
         }
-        .navbar a { 
-            text-decoration: none; color: var(--main-blue); 
-            font-weight: bold; cursor: pointer; font-size: 0.9rem;
-            transition: 0.3s; padding: 5px 10px; border-radius: 10px;
-        }
-        .navbar a:hover { box-shadow: inset 4px 4px 8px var(--shadow-dark); }
 
-        /* Main Card */
+        .navbar a { text-decoration: none; color: var(--main-blue); font-weight: bold; cursor: pointer; }
+
         .card-3d {
-            background: var(--bg-color); 
-            padding: 25px; border-radius: 35px;
+            background: var(--bg-color); padding: 25px; border-radius: 35px;
             box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
-            text-align: center; margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center; margin-bottom: 30px; transition: 0.3s;
         }
 
         .doctor-avatar {
@@ -55,61 +65,36 @@
             background: var(--bg-color); margin: auto; margin-bottom: 20px;
             box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             padding: 5px; border: 3px solid var(--gold);
-            display: flex; align-items: center; justify-content: center;
         }
-        .doctor-avatar img { width: 90%; border-radius: 50%; }
+        .doctor-avatar img { width: 100%; border-radius: 50%; }
 
-        /* Modern Buttons */
         .btn-3d {
-            background: var(--main-blue); 
-            border: none; padding: 18px; border-radius: 20px;
-            color: white; font-weight: bold; font-family: 'Changa';
+            background: var(--main-blue); border: none; padding: 18px; border-radius: 20px;
+            color: white; font-weight: bold; width: 100%; cursor: pointer;
             box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-            cursor: pointer; transition: all 0.2s ease; width: 100%;
-            font-size: 17px; margin-top: 10px;
+            transition: 0.3s; font-family: 'Changa';
         }
-        .btn-3d:hover { opacity: 0.9; transform: translateY(-2px); }
-        .btn-3d:active { transform: scale(0.95); box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2); }
 
-        /* Input Neumorphism */
         input, select {
             width: 100%; border: none; padding: 16px; border-radius: 18px;
-            background: var(--bg-color); box-sizing: border-box;
-            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
-            margin-bottom: 20px; font-family: 'Changa'; outline: none; text-align: center;
-            font-size: 15px; color: #444;
+            background: var(--bg-color); box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+            margin-bottom: 20px; font-family: 'Changa'; outline: none; text-align: center; color: var(--text-color);
         }
 
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--main-blue); font-size: 0.9rem; }
-
-        /* Pages Transition */
         .page { display: none; }
-        .active-page { display: block; animation: slideIn 0.4s ease-out; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .price-tag { 
-            color: var(--gold); font-weight: bold; display: block; 
-            font-size: 1.3rem; margin: 10px 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .badge {
-            background: var(--gold); color: white; padding: 4px 12px;
-            border-radius: 50px; font-size: 0.8rem; margin-bottom: 10px; display: inline-block;
-        }
+        .active-page { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body onload="loadServices()">
+
+<button class="theme-toggle" onclick="toggleTheme()">🌓</button>
 
 <div class="container">
     <nav class="navbar">
         <a onclick="show('home')">الرئيسية</a>
         <a onclick="show('services')">الخدمات</a>
-        <a onclick="show('book')">حجز سريع</a>
+        <a onclick="show('book')">حجز</a>
     </nav>
 
     <div id="home" class="page active-page">
@@ -117,110 +102,28 @@
             <div class="doctor-avatar">
                 <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor">
             </div>
-            <span class="badge">مفتوح الآن</span>
             <h2>مركز الابتسامة الملكي 🏥</h2>
-            <p>نصنع لك ابتسامة تليق بجمالك بأحدث تقنيات الـ 3D العالمية.</p>
+            <p>أهلاً بك في عالم الابتسامة المتطورة.</p>
             <button class="btn-3d" onclick="show('services')">استكشف خدماتنا ✨</button>
-        </div>
-        <div class="card-3d" style="padding: 15px;">
-            <small>📍 بغداد - حي المنصور - شارع الاميرات</small>
         </div>
     </div>
 
     <div id="services" class="page">
-        <h3 style="text-align: center; color: var(--main-blue);">قائمة الخدمات والأسعار</h3>
         <div id="services-list"></div>
     </div>
 
     <div id="book" class="page">
         <div class="card-3d">
-            <h2 id="booking-title">تفاصيل الموعد 📅</h2>
-            
-            <label>الاسم الكريم</label>
-            <input type="text" id="name" placeholder="مثال: أحمد علي">
-            
-            <label>رقم التواصل</label>
-            <input type="tel" id="phone" placeholder="07XXXXXXXX">
-
-            <label>اختر التاريخ</label>
+            <h2 id="booking-title">معلومات الحجز</h2>
+            <input type="text" id="name" placeholder="الاسم الكامل">
+            <input type="tel" id="phone" placeholder="رقم الموبايل">
             <input type="date" id="date">
-
-            <label>الوقت المفضل</label>
-            <select id="time">
-                <option>4:00 مساءً - 6:00 مساءً</option>
-                <option>6:00 مساءً - 8:00 مساءً</option>
-                <option>8:00 مساءً - 10:00 مساءً</option>
-            </select>
-
-            <button class="btn-3d" style="background: var(--success-green); margin-top: 20px;" onclick="send()">
-                تأكيد عبر واتساب ✅
-            </button>
+            <button class="btn-3d" style="background: #25D366;" onclick="send()">تأكيد واتساب ✅</button>
         </div>
     </div>
 </div>
 
 <script>
     const myServices = [
-        { title: "🦷 تنظيف وتلميع", price: "25,000 د.ع", icon: "✨" },
-        { title: "🏥 فحص واستشارة", price: "مجاني", icon: "🔍" },
-        { title: "💎 حشوات تجميلية", price: "40,000 د.ع", icon: "🎨" },
-        { title: "🌟 تبييض ليزر", price: "150,000 د.ع", icon: "💡" }
-    ];
-
-    const myWhatsAppNumber = "9647XXXXXXXX"; // غير الرقم هنا
-
-    let selectedService = "حجز عام";
-
-    function loadServices() {
-        const container = document.getElementById('services-list');
-        container.innerHTML = ""; 
-        myServices.forEach(service => {
-            container.innerHTML += `
-                <div class="card-3d">
-                    <div style="font-size: 2rem;">${service.icon}</div>
-                    <h3>${service.title}</h3>
-                    <span class="price-tag">${service.price}</span>
-                    <button class="btn-3d" onclick="selectService('${service.title}')">اختيار الخدمة</button>
-                </div>
-            `;
-        });
-    }
-
-    function selectService(name) {
-        selectedService = name;
-        document.getElementById('booking-title').innerText = "حجز " + name;
-        show('book');
-    }
-
-    function show(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(id).classList.add('active-page');
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
-    function send() {
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
-
-        if(!name || !phone || !date) { 
-            alert("صديقي، يرجى ملء الاسم والتاريخ ورقم الهاتف لنخدمك بشكل أفضل"); 
-            return; 
-        }
-        
-        const msg = encodeURIComponent(`مرحباً مركز الابتسامة الملكي، أرغب في حجز موعد:
-👤 الاسم: ${name}
-📞 الهاتف: ${phone}
-🦷 الخدمة: ${selectedService}
-📅 التاريخ: ${date}
-⏰ الوقت: ${time}
----
-تم الإرسال عبر نظام الحجز الذكي`);
-
-        window.open(`https://wa.me/${myWhatsAppNumber}?text=${msg}`, '_blank');
-    }
-</script>
-
-</body>
-</html>
+        { title: "🦷 تنظيف وتلميع", price: "25
+            
