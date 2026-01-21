@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز الابتسامة الملكي - نظام الحجز الذكي</title>
+    <title>مركز الابتسامة الملكي - حجز سريع</title>
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,7 +15,6 @@
             --text-color: #2c3e50;
         }
 
-        /* إصلاح ألوان الوضع المظلم */
         .dark-mode {
             --bg-color: #1a202c;
             --main-blue: #63b3ed;
@@ -30,12 +29,11 @@
             font-family: 'Changa', sans-serif; 
             margin: 0; padding: 10px;
             color: var(--text-color);
-            transition: background 0.4s ease, color 0.4s ease;
+            transition: 0.4s;
         }
 
         .container { max-width: 480px; margin: auto; padding-top: 20px; }
 
-        /* زر تبديل الوضع الليلي */
         .theme-toggle {
             position: fixed; bottom: 25px; left: 25px;
             width: 55px; height: 55px; border-radius: 50%;
@@ -43,9 +41,8 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; border: none; font-size: 24px;
             box-shadow: 6px 6px 15px rgba(0,0,0,0.2);
-            z-index: 1000; transition: 0.3s;
+            z-index: 1000;
         }
-        .theme-toggle:active { transform: scale(0.9); }
 
         .navbar {
             display: flex; justify-content: space-around; 
@@ -61,23 +58,14 @@
             text-align: center; margin-bottom: 30px;
         }
 
-        .doctor-avatar {
-            width: 140px; height: 140px; border-radius: 50%;
-            background: var(--bg-color); margin: auto; margin-bottom: 20px;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            padding: 5px; border: 3px solid var(--gold);
-        }
-        .doctor-avatar img { width: 100%; border-radius: 50%; }
-
         .btn-3d {
             background: var(--main-blue); border: none; padding: 18px; border-radius: 20px;
             color: white; font-weight: bold; width: 100%; cursor: pointer;
             box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-            transition: 0.3s; font-family: 'Changa'; font-size: 17px;
+            font-family: 'Changa'; font-size: 17px; transition: 0.3s;
         }
-        .btn-3d:hover { opacity: 0.9; }
 
-        input, select {
+        input {
             width: 100%; border: none; padding: 16px; border-radius: 18px;
             background: var(--bg-color); color: var(--text-color);
             box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
@@ -85,13 +73,7 @@
         }
 
         .page { display: none; }
-        .active-page { display: block; animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .badge {
-            background: var(--gold); color: white; padding: 4px 15px;
-            border-radius: 50px; font-size: 0.8rem; margin-bottom: 15px; display: inline-block;
-        }
+        .active-page { display: block; }
     </style>
 </head>
 <body onload="loadServices()">
@@ -107,18 +89,13 @@
 
     <div id="home" class="page active-page">
         <div class="card-3d">
-            <div class="doctor-avatar">
-                <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor">
-            </div>
-            <span class="badge">مفتوح الآن</span>
             <h2>مركز الابتسامة الملكي 🏥</h2>
-            <p>أهلاً بك في عالم الابتسامة المتطورة والتقنيات الحديثة.</p>
+            <p>أهلاً بك في عالم الابتسامة المتطورة.</p>
             <button class="btn-3d" onclick="show('services')">استكشف خدماتنا ✨</button>
         </div>
     </div>
 
     <div id="services" class="page">
-        <h3 style="text-align: center; margin-bottom: 20px;">خدماتنا المميزة</h3>
         <div id="services-list"></div>
     </div>
 
@@ -127,8 +104,7 @@
             <h2 id="booking-title">معلومات الحجز</h2>
             <input type="text" id="name" placeholder="الاسم الكامل">
             <input type="tel" id="phone" placeholder="رقم الموبايل">
-            <input type="date" id="date">
-            <button class="btn-3d" style="background: #25D366;" onclick="send()">إرسال عبر واتساب ✅</button>
+            <button class="btn-3d" style="background: #25D366;" onclick="send()">تأكيد عبر واتساب ✅</button>
         </div>
     </div>
 </div>
@@ -140,17 +116,12 @@
         { title: "🌟 تبييض ليزر", price: "150,000 د.ع" }
     ];
 
+    // استبدل الرقم برقمك الحقيقي (بدون أصفار أو علامة +)
     const myWhatsAppNumber = "9647XXXXXXXX"; 
 
-    // دالة تبديل الوضع الليلي (المصلحة)
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
-        const btn = document.getElementById('modeBtn');
-        if(document.body.classList.contains('dark-mode')) {
-            btn.innerText = "☀️";
-        } else {
-            btn.innerText = "🌓";
-        }
+        document.getElementById('modeBtn').innerText = document.body.classList.contains('dark-mode') ? "☀️" : "🌓";
     }
 
     function loadServices() {
@@ -161,30 +132,38 @@
                 <div class="card-3d">
                     <h3>${s.title}</h3>
                     <p style="color:var(--gold); font-weight:bold;">${s.price}</p>
-                    <button class="btn-3d" onclick="selectService('${s.title}')">اختيار الخدمة</button>
+                    <button class="btn-3d" onclick="selectService('${s.title}')">اختيار</button>
                 </div>`;
         });
     }
 
     function selectService(name) {
+        selectedService = name;
         document.getElementById('booking-title').innerText = "حجز " + name;
         show('book');
     }
 
+    let selectedService = "حجز عام";
+
     function show(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
-        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function send() {
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
-        const date = document.getElementById('date').value;
-        if(!name || !phone || !date) return alert("يرجى إكمال جميع الحقول");
+
+        if(!name || !phone) return alert("يرجى إكمال الاسم ورقم الهاتف");
         
-        const msg = encodeURIComponent(`طلب حجز جديد:\n👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n📅 التاريخ: ${date}`);
-        window.open(`https://wa.me/${myWhatsAppNumber}?text=${msg}`, '_blank');
+        // إصلاح رابط الواتساب ليعمل بشكل مباشر
+        const text = "طلب حجز جديد من المركز الملكي:\n" + 
+                     "👤 الاسم: " + name + "\n" + 
+                     "📞 الهاتف: " + phone + "\n" + 
+                     "🦷 الخدمة: " + selectedService;
+
+        const whatsappUrl = "https://api.whatsapp.com/send?phone=" + myWhatsAppNumber + "&text=" + encodeURIComponent(text);
+        window.open(whatsappUrl, '_blank');
     }
 </script>
 </body>
