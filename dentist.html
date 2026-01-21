@@ -7,226 +7,189 @@
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --medical-blue: #0077b6; /* أزرق طبي */
-            --light-blue: #caf0f8;
-            --accent-gold: #d4ac0d;
+            --main-blue: #0077b6;
             --bg-color: #f8f9fa;
-            --text-dark: #212529;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* ألوان الوضع الليلي */
+        [data-theme="dark"] {
+            --main-blue: #00b4d8;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --nav-bg: #1e1e1e;
+            --shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         body { 
             background: var(--bg-color); 
             font-family: 'Changa', sans-serif; 
-            margin: 0; padding-bottom: 30px; 
-            color: var(--text-dark);
+            margin: 0; color: var(--text-color);
+            transition: 0.3s;
         }
 
-        /* رأس الصفحة (الهيدر) */
-        .header {
+        /* التنقل (Navbar) */
+        nav {
+            background: var(--nav-bg);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a.active { color: var(--main-blue); border-bottom: 2px solid var(--main-blue); }
+
+        .page { display: none; padding: 20px; max-width: 800px; margin: auto; animation: fadeIn 0.5s; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* الهيدر */
+        .hero {
             background: linear-gradient(135deg, #0077b6, #00b4d8);
             color: white;
-            padding: 50px 20px;
+            padding: 60px 20px;
             text-align: center;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 0 0 40px 40px;
             margin-bottom: 30px;
         }
 
-        .header h1 { margin: 0; font-size: 2em; }
-        .header p { margin: 10px 0 0; opacity: 0.9; font-size: 0.95em; }
-
-        /* شبكة الخدمات */
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
-            gap: 20px; padding: 15px; max-width: 1000px; margin: auto; 
+        /* الكروت والخدمات */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
         }
 
-        .service-card { 
-            background: white; 
-            border-radius: 25px; 
-            text-align: center; 
-            overflow: hidden; 
-            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            border: 1px solid #e9ecef;
+        .service-img { width: 100%; height: 150px; border-radius: 15px; object-fit: cover; }
+
+        /* زر الوضع الليلي */
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--main-blue); color: white;
+            border: none; width: 50px; height: 50px; border-radius: 50%;
+            cursor: pointer; font-size: 20px; z-index: 2000;
         }
 
-        .service-card:hover { transform: translateY(-5px); border-color: var(--medical-blue); }
-
-        .service-img { width: 100%; height: 130px; object-fit: cover; }
-
-        .service-info { padding: 15px; }
-        .service-info h3 { font-size: 1.1em; margin: 10px 0; }
-        .price { color: var(--medical-blue); font-weight: 700; font-size: 1em; display: block; margin-bottom: 15px; }
-
-        .book-btn { 
-            background: var(--medical-blue); 
-            color: white; border: none; 
-            padding: 10px 15px; border-radius: 50px; 
-            cursor: pointer; font-family: 'Changa'; 
-            width: 100%; font-weight: bold; transition: 0.3s; 
+        /* فورم الحجز */
+        input, textarea {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border-radius: 10px; border: 1px solid #ddd;
+            background: var(--card-bg); color: var(--text-color);
         }
 
-        .book-btn:active { transform: scale(0.95); opacity: 0.8; }
-
-        /* أيقونة الحجز العائمة */
-        .floating-booking { 
-            position: fixed; bottom: 30px; left: 30px; 
-            background: #27ae60; color: white; 
-            width: 70px; height: 70px; border-radius: 20px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            cursor: pointer; z-index: 2000; 
-            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3); 
+        .btn {
+            background: var(--main-blue); color: white;
+            border: none; padding: 15px 30px; border-radius: 10px;
+            cursor: pointer; font-weight: bold; width: 100%;
         }
-
-        /* نافذة المراجعة (المودال) */
-        .modal { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.6); z-index: 3000; justify-content: center; align-items: flex-end; 
-        }
-
-        .modal-content { 
-            background: white; padding: 25px; 
-            border-top-left-radius: 30px; border-top-right-radius: 30px; 
-            width: 100%; max-width: 500px; text-align: right; 
-            max-height: 85vh; overflow-y: auto; 
-        }
-
-        .selected-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #f1f3f5; padding: 10px 15px; border-radius: 15px; }
-        
-        input, textarea { width: 100%; padding: 15px; margin: 10px 0; border-radius: 15px; border: 1px solid #dee2e6; font-family: 'Changa'; box-sizing: border-box; }
-        
-        .confirm-btn { background: #25D366; color: white; border: none; padding: 18px; border-radius: 15px; width: 100%; font-weight: bold; font-family: 'Changa'; cursor: pointer; font-size: 1.1em; margin-top: 10px; }
-
-        .close-btn { background: none; border: none; color: #adb5bd; cursor: pointer; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>🦷 مركز الابتسامة الملكي</h1>
-        <p>رعاية تخصصية لأسنانك بأحدث التقنيات</p>
-    </div>
+    <nav>
+        <a onclick="showPage('home')" id="link-home" class="active">الرئيسية</a>
+        <a onclick="showPage('services')" id="link-services">خدماتنا</a>
+        <a onclick="showPage('booking')" id="link-booking">حجز موعد</a>
+    </nav>
 
-    <div class="services-grid">
-        <div class="service-card">
-            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=500" class="service-img">
-            <div class="service-info">
-                <h3>تنظيف وتلميع</h3>
-                <span class="price">25,000 د.ع</span>
-                <button class="book-btn" onclick="addToCart('تنظيف وتلميع', 25000)">إضافة للطلب</button>
-            </div>
+    <div id="home" class="page active">
+        <div class="hero">
+            <h1>أهلاً بك في مركز الابتسامة 🦷</h1>
+            <p>نعتني بجمال ضحكتك بأحدث الوسائل العالمية</p>
         </div>
-
-        <div class="service-card">
-            <img src="https://images.unsplash.com/photo-1593059080506-517a33f7293b?q=80&w=500" class="service-img">
-            <div class="service-info">
-                <h3>تبييض منزلي/ليزر</h3>
-                <span class="price">150,000 د.ع</span>
-                <button class="book-btn" onclick="addToCart('تبييض أسنان', 150000)">إضافة للطلب</button>
-            </div>
-        </div>
-
-        <div class="service-card">
-            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=500" class="service-img">
-            <div class="service-info">
-                <h3>حشوات تجميلية</h3>
-                <span class="price">40,000 د.ع</span>
-                <button class="book-btn" onclick="addToCart('حشوات تجميلية', 40000)">إضافة للطلب</button>
-            </div>
+        <div class="card">
+            <h2>لماذا تختارنا؟</h2>
+            <p>نوفر لك كادر طبي متخصص، تعقيم عالي المستوى، وأسعار تنافسية تناسب الجميع.</p>
         </div>
     </div>
 
-    <div class="floating-booking" onclick="openCart()">
-        <span id="cart-count" style="font-weight: bold; font-size: 1.2em;">0</span>
-        <span style="font-size: 0.7em;">خدمات</span>
-    </div>
-
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 style="margin:0">تأكيد الموعد 🏥</h2>
-                <button class="close-btn" onclick="closeCart()">✕</button>
-            </div>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-            
-            <div id="items-list"></div>
-            
-            <p style="font-weight:bold; color: var(--medical-blue);">المجموع التقديري: <span id="total-price">0</span> د.ع</p>
-
-            <input type="text" id="cust-name" placeholder="الاسم الكامل">
-            <input type="tel" id="cust-phone" placeholder="رقم الهاتف">
-            <textarea id="order-notes" placeholder="هل تعاني من ألم معين أو حساسية؟"></textarea>
-            
-            <button class="confirm-btn" onclick="sendToWhatsApp()">تثبيت الموعد عبر واتساب ✅</button>
+    <div id="services" class="page">
+        <h2 style="text-align: center;">خدماتنا المميزة</h2>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=500" class="service-img">
+            <h3>تنظيف الأسنان</h3>
+            <p>إزالة التصبغات والترسبات الكلسية بأحدث أجهزة السكيلر.</p>
+            <button class="btn" onclick="showPage('booking')">احجز الآن</button>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=500" class="service-img">
+            <h3>الحشوات الضوئية</h3>
+            <p>ترميم الأسنان بحشوات تجميلية مطابقة للون السن الطبيعي.</p>
+            <button class="btn" onclick="showPage('booking')">احجز الآن</button>
         </div>
     </div>
+
+    <div id="booking" class="page">
+        <div class="card">
+            <h2>تثبيت موعد 📅</h2>
+            <p>يرجى ملء البيانات وسنقوم بالتواصل معك فوراً</p>
+            <input type="text" id="name" placeholder="الاسم الكامل">
+            <input type="tel" id="phone" placeholder="رقم هاتفك">
+            <textarea id="note" placeholder="اكتب مشكلتك هنا (مثلاً: ألم في الضرس العلوي)"></textarea>
+            <button class="btn" style="background: #25D366;" onclick="sendOrder()">إرسال عبر واتساب ✅</button>
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
 
     <script>
-        let cart = {};
+        // نظام التنقل بين الصفحات
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('link-' + pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
 
-        function addToCart(name, price) {
-            if (cart[name]) {
-                cart[name].qty += 1;
+        // تبديل الوضع الليلي
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
             } else {
-                cart[name] = { price: price, qty: 1 };
+                body.setAttribute('data-theme', 'dark');
             }
-            updateCartBadge();
         }
 
-        function updateCartBadge() {
-            let totalQty = 0;
-            for (let item in cart) { totalQty += cart[item].qty; }
-            document.getElementById('cart-count').innerText = totalQty;
-        }
-
-        function renderCart() {
-            const list = document.getElementById('items-list');
-            let total = 0; list.innerHTML = "";
-            for (let name in cart) {
-                total += cart[name].price * cart[name].qty;
-                list.innerHTML += `
-                    <div class="selected-item">
-                        <span>${name}</span>
-                        <button onclick="removeItem('${name}')" style="background:none; border:none; color:red; cursor:pointer;">حذف</button>
-                    </div>`;
-            }
-            document.getElementById('total-price').innerText = total.toLocaleString();
-        }
-
-        function removeItem(name) {
-            delete cart[name];
-            updateCartBadge();
-            renderCart();
-            if (Object.keys(cart).length === 0) closeCart();
-        }
-
-        function openCart() {
-            if (Object.keys(cart).length === 0) { alert("يرجى اختيار خدمة واحدة على الأقل"); return; }
-            renderCart();
-            document.getElementById('cart-modal').style.display = 'flex';
-        }
-
-        function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
-
-        function sendToWhatsApp() {
-            const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const notes = document.getElementById('order-notes').value;
+        // إرسال البيانات
+        function sendOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const note = document.getElementById('note').value;
             
-            if (!name || !phone) { alert("يرجى ملء الاسم ورقم الهاتف"); return; }
+            if(!name || !phone) { alert("أدخل اسمك ورقمك حبيبي"); return; }
 
-            let msg = "*طلب حجز موعد في عيادة الأسنان 🦷*\n\n";
-            msg += `*الاسم:* ${name}\n*الهاتف:* ${phone}\n\n`;
-            msg += "*الخدمات المطلوبة:*\n";
-            for (let service in cart) { msg += `• ${service}\n`; }
-            if (notes) { msg += `\n*📝 ملاحظات:* ${notes}\n`; }
-            msg += `\n*💰 المجموع التقديري:* ${document.getElementById('total-price').innerText} د.ع`;
+            // ضع رقمك هنا مكان YOUR_NUMBER_HERE (مثال: 9647700000000)
+            const myNumber = "YOUR_NUMBER_HERE"; 
             
-            // استبدل الرقم برقم العيادة الحقيقي
-            window.open("https://wa.me/9647747231856?text=" + encodeURIComponent(msg));
+            let message = `*طلب حجز جديد 🏥*\n\n`;
+            message += `*الاسم:* ${name}\n`;
+            message += `*الهاتف:* ${phone}\n`;
+            message += `*المشكلة:* ${note}`;
+
+            window.open(`https://wa.me/${myNumber}?text=${encodeURIComponent(message)}`);
         }
     </script>
 </body>
