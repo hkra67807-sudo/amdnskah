@@ -73,7 +73,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .price-tag { color: var(--gold); font-weight: bold; margin-bottom: 15px; display: block; }
+        .price-tag { color: var(--gold); font-weight: bold; margin-bottom: 15px; display: block; font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -91,13 +91,14 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor">
             </div>
             <h2>مركز الابتسامة الملكي 🏥</h2>
-            <p>نعتني بابتسامتك بأحدث التقنيات وبأجواء مريحة.</p>
-            <button class="btn-3d" onclick="show('services')">عرض الخدمات</button>
+            <p>نعتني بابتسامتك بأحدث التقنيات وبأجواء مريحة جداً.</p>
+            <button class="btn-3d" onclick="show('services')">عرض الخدمات والأسعار</button>
         </div>
     </div>
 
     <div id="services" class="page">
-        <div id="services-list"></div>
+        <div id="services-list">
+            </div>
     </div>
 
     <div id="book" class="page">
@@ -105,27 +106,25 @@
             <h2 id="booking-title">معلومات الحجز 📋</h2>
             <input type="text" id="name" placeholder="الاسم الكامل">
             <input type="tel" id="phone" placeholder="رقم الموبايل">
-            <button class="btn-3d" style="background: #25D366;" onclick="send()">إرسال عبر واتساب ✅</button>
+            <button class="btn-3d" style="background: #25D366;" onclick="send()">إرسال الطلب عبر واتساب ✅</button>
         </div>
     </div>
 </div>
 
 <script>
-    // --- تعديل البيانات من هنا فقط ---
+    // --- البيانات الجاهزة للتعديل ---
     const myServices = [
-        { title: "🦷 تنظيف وتلميع", price: "25,000 د.ع" },
-        { title: "💎 تبييض ليزري", price: "100,000 د.ع" },
-        { title: "🛠️ حشوات تجميلية", price: "40,000 د.ع" },
-        { title: "🏥 قلع جراحي", price: "50,000 د.ع" },
-        { title: "🦷 تقويم أسنان", price: "حسب الحالة" }
+        { title: "🦷 تنظيف أسنان", price: "25,000 د.ع" },
+        { title: "🏥 قلع أسنان", price: "20,000 د.ع" },
+        { title: "💎 تبييض أسنان", price: "50,000 د.ع" }
     ];
 
-    const myWhatsAppNumber = "9647XXXXXXXX"; // ضع رقمك هنا بالصيغة الدولية
-    // ------------------------------
+    // ضع رقم الواتساب الحقيقي هنا (بدون أصفار أو + في البداية)
+    const myWhatsAppNumber = "9647XXXXXXXX"; 
 
     let selectedService = "حجز عام";
 
-    // دالة عرض الخدمات
+    // دالة بناء قائمة الخدمات
     function loadServices() {
         const container = document.getElementById('services-list');
         container.innerHTML = ""; 
@@ -133,29 +132,48 @@
             container.innerHTML += `
                 <div class="card-3d">
                     <h3>${service.title}</h3>
-                    <span class="price-tag">السعر: ${service.price}</span>
+                    <span class="price-tag">${service.price}</span>
                     <button class="btn-3d" onclick="selectService('${service.title}')">حجز الآن</button>
                 </div>
             `;
         });
     }
 
+    // دالة اختيار الخدمة والانتقال للحجز
     function selectService(name) {
         selectedService = name;
         document.getElementById('booking-title').innerText = "حجز: " + name;
         show('book');
     }
 
+    // دالة التنقل بين الصفحات
     function show(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
         window.scrollTo(0,0);
     }
 
+    // دالة الإرسال للواتساب
     function send() {
         const n = document.getElementById('name').value;
         const p = document.getElementById('phone').value;
 
         if(!n || !p) { 
-            alert("عذراً، يرج
-    
+            alert("يرجى كتابة الاسم ورقم الهاتف لإتمام الحجز"); 
+            return; 
+        }
+        
+        const msg = `طلب حجز من الموقع:
+الاسم: ${n}
+الهاتف: ${p}
+الخدمة: ${selectedService}`;
+
+        window.open(`https://wa.me/${myWhatsAppNumber}?text=${encodeURIComponent(msg)}`);
+    }
+
+    // تشغيل جلب الخدمات عند فتح الموقع
+    loadServices();
+</script>
+
+</body>
+</html>
