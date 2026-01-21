@@ -54,6 +54,7 @@
             color: white; font-weight: bold; font-family: 'Changa';
             box-shadow: 5px 5px 15px rgba(26, 82, 118, 0.3);
             cursor: pointer; transition: 0.3s; width: 100%;
+            font-size: 16px;
         }
         .btn-3d:active { transform: scale(0.95); box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2); }
 
@@ -61,11 +62,18 @@
             width: 100%; border: none; padding: 16px; border-radius: 15px;
             background: var(--bg-color); box-sizing: border-box;
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
-            margin-bottom: 20px; font-family: 'Changa'; outline: none;
+            margin-bottom: 20px; font-family: 'Changa'; outline: none; text-align: center;
         }
 
         .page { display: none; }
-        .active-page { display: block; }
+        .active-page { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .price-tag { color: var(--gold); font-weight: bold; margin-bottom: 15px; display: block; }
     </style>
 </head>
 <body>
@@ -84,20 +92,17 @@
             </div>
             <h2>مركز الابتسامة الملكي 🏥</h2>
             <p>نعتني بابتسامتك بأحدث التقنيات وبأجواء مريحة.</p>
-            <button class="btn-3d" onclick="show('services')">ابدأ الحجز</button>
+            <button class="btn-3d" onclick="show('services')">عرض الخدمات</button>
         </div>
     </div>
 
     <div id="services" class="page">
-        <div class="card-3d">
-            <h3>🦷 تنظيف وتلميع</h3>
-            <button class="btn-3d" onclick="show('book')">حجز</button>
-        </div>
+        <div id="services-list"></div>
     </div>
 
     <div id="book" class="page">
         <div class="card-3d">
-            <h2>معلومات الحجز 📋</h2>
+            <h2 id="booking-title">معلومات الحجز 📋</h2>
             <input type="text" id="name" placeholder="الاسم الكامل">
             <input type="tel" id="phone" placeholder="رقم الموبايل">
             <button class="btn-3d" style="background: #25D366;" onclick="send()">إرسال عبر واتساب ✅</button>
@@ -106,21 +111,51 @@
 </div>
 
 <script>
+    // --- تعديل البيانات من هنا فقط ---
+    const myServices = [
+        { title: "🦷 تنظيف وتلميع", price: "25,000 د.ع" },
+        { title: "💎 تبييض ليزري", price: "100,000 د.ع" },
+        { title: "🛠️ حشوات تجميلية", price: "40,000 د.ع" },
+        { title: "🏥 قلع جراحي", price: "50,000 د.ع" },
+        { title: "🦷 تقويم أسنان", price: "حسب الحالة" }
+    ];
+
+    const myWhatsAppNumber = "9647XXXXXXXX"; // ضع رقمك هنا بالصيغة الدولية
+    // ------------------------------
+
+    let selectedService = "حجز عام";
+
+    // دالة عرض الخدمات
+    function loadServices() {
+        const container = document.getElementById('services-list');
+        container.innerHTML = ""; 
+        myServices.forEach(service => {
+            container.innerHTML += `
+                <div class="card-3d">
+                    <h3>${service.title}</h3>
+                    <span class="price-tag">السعر: ${service.price}</span>
+                    <button class="btn-3d" onclick="selectService('${service.title}')">حجز الآن</button>
+                </div>
+            `;
+        });
+    }
+
+    function selectService(name) {
+        selectedService = name;
+        document.getElementById('booking-title').innerText = "حجز: " + name;
+        show('book');
+    }
+
     function show(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
+        window.scrollTo(0,0);
     }
+
     function send() {
         const n = document.getElementById('name').value;
         const p = document.getElementById('phone').value;
-        if(!n || !p) { alert("يرجى كتابة الاسم والرقم"); return; }
-        
-        // استبدل كلمة YOUR_PHONE_NUMBER برقم الواتساب الحقيقي عند الحاجة
-        const myNumber = "YOUR_PHONE_NUMBER"; 
-        const msg = `أهلاً، أرغب بحجز موعد باسم: ${n} ورقم الهاتف: ${p}`;
-        window.open(`https://wa.me/${myNumber}?text=${encodeURIComponent(msg)}`);
-    }
-</script>
 
-</body>
-</html>
+        if(!n || !p) { 
+            alert("عذراً، يرج
+    
