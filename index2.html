@@ -12,16 +12,38 @@
             --gold: #d4ac0d;
             --shadow-dark: #cbd5e0;
             --shadow-light: #ffffff;
+            --text-color: #2c3e50;
+        }
+
+        /* ألوان الوضع الليلي */
+        .dark-mode {
+            --bg-color: #1a202c;
+            --main-blue: #63b3ed;
+            --gold: #f6ad55;
+            --shadow-dark: #0d1117;
+            --shadow-light: #2d3748;
+            --text-color: #e2e8f0;
         }
 
         body { 
             background-color: var(--bg-color); 
             font-family: 'Changa', sans-serif; 
             margin: 0; padding: 15px;
-            color: #2c3e50;
+            color: var(--text-color);
+            transition: 0.3s;
         }
 
         .container { max-width: 480px; margin: auto; }
+
+        /* زر الوضع الليلي */
+        .theme-toggle {
+            position: fixed; bottom: 20px; left: 20px;
+            width: 55px; height: 55px; border-radius: 50%;
+            background: var(--main-blue); color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000; border: none; font-size: 24px;
+        }
 
         .navbar {
             display: flex; justify-content: space-around; 
@@ -29,7 +51,7 @@
             padding: 12px; border-radius: 20px;
             box-shadow: 8px 8px 15px var(--shadow-dark), -8px -8px 15px var(--shadow-light);
             margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .navbar a { text-decoration: none; color: var(--main-blue); font-weight: bold; cursor: pointer; }
 
@@ -44,23 +66,23 @@
             width: 150px; height: 150px; border-radius: 50%;
             background: var(--bg-color); margin: auto; margin-bottom: 20px;
             box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
-            padding: 8px; border: 2px solid var(--gold);
+            padding: 8px; border: 3px solid var(--gold);
         }
         .doctor-avatar img { width: 100%; border-radius: 50%; }
 
         .btn-3d {
             background: var(--main-blue); 
-            border: none; padding: 15px; border-radius: 18px;
+            border: none; padding: 18px; border-radius: 20px;
             color: white; font-weight: bold; font-family: 'Changa';
             box-shadow: 5px 5px 15px rgba(26, 82, 118, 0.3);
             cursor: pointer; transition: 0.3s; width: 100%;
-            font-size: 16px;
+            font-size: 17px;
         }
-        .btn-3d:active { transform: scale(0.95); box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2); }
+        .btn-3d:active { transform: scale(0.95); }
 
         input {
             width: 100%; border: none; padding: 16px; border-radius: 15px;
-            background: var(--bg-color); box-sizing: border-box;
+            background: var(--bg-color); color: var(--text-color);
             box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
             margin-bottom: 20px; font-family: 'Changa'; outline: none; text-align: center;
         }
@@ -72,17 +94,17 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .price-tag { color: var(--gold); font-weight: bold; margin-bottom: 15px; display: block; font-size: 1.1rem; }
     </style>
 </head>
-<body>
+<body onload="loadServices()">
+
+<button class="theme-toggle" id="modeBtn" onclick="toggleTheme()">🌓</button>
 
 <div class="container">
     <nav class="navbar">
         <a onclick="show('home')">الرئيسية</a>
-        <a onclick="show('services')">خدماتنا</a>
-        <a onclick="show('book')">حجز موعد</a>
+        <a onclick="show('services')">الخدمات</a>
+        <a onclick="show('book')">حجز</a>
     </nav>
 
     <div id="home" class="page active-page">
@@ -91,79 +113,80 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor">
             </div>
             <h2>مركز الابتسامة الملكي 🏥</h2>
-            <p>نعتني بابتسامتك بأحدث التقنيات وبأجواء مريحة جداً.</p>
-            <button class="btn-3d" onclick="show('services')">عرض الخدمات والأسعار</button>
+            <p>نصنع لك ابتسامة تليق بجمالك بأحدث تقنيات الـ 3D العالمية.</p>
+            <button class="btn-3d" onclick="show('services')">استكشف خدماتنا ✨</button>
         </div>
     </div>
 
     <div id="services" class="page">
-        <div id="services-list">
-            </div>
+        <div id="services-list"></div>
     </div>
 
     <div id="book" class="page">
         <div class="card-3d">
-            <h2 id="booking-title">معلومات الحجز 📋</h2>
+            <h2 id="booking-title">معلومات الحجز</h2>
             <input type="text" id="name" placeholder="الاسم الكامل">
             <input type="tel" id="phone" placeholder="رقم الموبايل">
-            <button class="btn-3d" style="background: #25D366;" onclick="send()">إرسال الطلب عبر واتساب ✅</button>
+            <button class="btn-3d" style="background: #25D366;" onclick="send()">إرسال عبر واتساب ✅</button>
         </div>
     </div>
 </div>
 
 <script>
-    // --- البيانات الجاهزة للتعديل ---
     const myServices = [
-        { title: "🦷 تنظيف أسنان", price: "25,000 د.ع" },
+        { title: "🦷 تنظيف وتلميع", price: "25,000 د.ع" },
         { title: "🏥 قلع أسنان", price: "20,000 د.ع" },
-        { title: "💎 تبييض أسنان", price: "50,000 د.ع" }
+        { title: "💎 تبييض ليزر", price: "150,000 د.ع" }
     ];
 
-    // ضع رقم الواتساب الحقيقي هنا (بدون أصفار أو + في البداية)
+    // ضع رقمك هنا ليعمل الزر (مثال: 9647800000000)
     const myWhatsAppNumber = "9647XXXXXXXX"; 
 
-    let selectedService = "حجز عام";
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const btn = document.getElementById('modeBtn');
+        btn.innerText = document.body.classList.contains('dark-mode') ? "☀️" : "🌓";
+    }
 
-    // دالة بناء قائمة الخدمات
     function loadServices() {
         const container = document.getElementById('services-list');
         container.innerHTML = ""; 
-        myServices.forEach(service => {
+        myServices.forEach(s => {
             container.innerHTML += `
                 <div class="card-3d">
-                    <h3>${service.title}</h3>
-                    <span class="price-tag">${service.price}</span>
-                    <button class="btn-3d" onclick="selectService('${service.title}')">حجز الآن</button>
-                </div>
-            `;
+                    <h3>${s.title}</h3>
+                    <p style="color:var(--gold); font-weight:bold;">${s.price}</p>
+                    <button class="btn-3d" onclick="selectService('${s.title}')">اختيار الخدمة</button>
+                </div>`;
         });
     }
 
-    // دالة اختيار الخدمة والانتقال للحجز
+    let selectedService = "حجز عام";
+
     function selectService(name) {
         selectedService = name;
-        document.getElementById('booking-title').innerText = "حجز: " + name;
+        document.getElementById('booking-title').innerText = "حجز " + name;
         show('book');
     }
 
-    // دالة التنقل بين الصفحات
     function show(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
         window.scrollTo(0,0);
     }
 
-    // دالة الإرسال للواتساب
     function send() {
         const n = document.getElementById('name').value;
         const p = document.getElementById('phone').value;
-
-        if(!n || !p) { 
-            alert("يرجى كتابة الاسم ورقم الهاتف لإتمام الحجز"); 
-            return; 
-        }
         
-        const msg = `طلب حجز من الموقع:
-الاسم: ${n}
-الهاتف: ${p}
-الخدمة: ${selectedService}`;
+        if(!n || !p) return alert("يرجى إكمال البيانات");
+        
+        // إذا لم تضع رقمك في الكود
+        if(myWhatsAppNumber.includes("X")) return alert("يرجى إضافة رقم الواتساب في الكود أولاً");
+
+        const msg = encodeURIComponent(`طلب حجز جديد:\n👤 الاسم: ${n}\n📞 الهاتف: ${p}\n🦷 الخدمة: ${selectedService}`);
+        window.open(`https://api.whatsapp.com/send?phone=${myWhatsAppNumber}&text=${msg}`, '_blank');
+    }
+</script>
+</body>
+</html>
