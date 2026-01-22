@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عمران | Omran - Profile</title>
+    <title>عمران | Omran</title>
     <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --bg: #0b0f19;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: var(--bg);
+            color: white;
             margin: 0;
             display: flex;
             justify-content: center;
@@ -16,52 +21,46 @@
             height: 100vh;
             text-align: center;
         }
-        .container {
-            padding: 20px;
-            max-width: 600px;
+        .profile-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
         h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            font-size: 3.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         p {
-            font-size: 1.2rem;
             color: #94a3b8;
-            line-height: 1.6;
-        }
-        .links {
-            margin-top: 30px;
+            font-size: 1.2rem;
+            margin: 20px 0;
         }
         .btn {
             display: inline-block;
-            padding: 10px 25px;
-            margin: 10px;
-            color: #fff;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
             text-decoration: none;
-            border: 1px solid #38bdf8;
-            border-radius: 50px;
-            transition: 0.3s;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s transform;
         }
         .btn:hover {
-            background-color: #38bdf8;
-            color: #0f172a;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>أهلاً، أنا عمران</h1>
-        <p>مرحباً بك في موقعي الشخصي على GitHub. أنا مهتم ببناء المشاريع الرقمية ومشاركة المعرفة التقنية.</p>
-        
-        <div class="links">
-            <a href="https://github.com/omran" class="btn">GitHub</a>
-            <a href="#" class="btn">مشاريعي</a>
-            <a href="mailto:your-email@example.com" class="btn">تواصل معي</a>
-        </div>
+    <div class="profile-card">
+        <h1>عمران</h1>
+        <p>هذا هو موقعي التعريفي الخاص على GitHub</p>
+        <a href="https://github.com/hkra67807-sudo" class="btn">تابعني على GitHub</a>
     </div>
 </body>
 </html>
-
