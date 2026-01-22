@@ -5,17 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عمران | Omran</title>
     <style>
-        body { background-color: #050505; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }
-        .card { background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); max-width: 380px; width: 90%; }
-        .profile-img { width: 180px; height: 180px; border-radius: 30px; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.2); margin-bottom: 20px; }
-        h1 { margin: 10px 0; font-size: 2.5rem; font-weight: bold; }
-        p { color: #888; margin-bottom: 30px; }
-        .btn { display: block; padding: 15px; background: #fff; color: #000; text-decoration: none; border-radius: 15px; font-weight: bold; }
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 25px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { margin: 10px 0; font-size: 2rem; }
+        p { color: #888; margin-bottom: 25px; }
+        .btn {
+            display: block;
+            padding: 12px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="cmcevywpp2jfskc0dz28u3g9m8v8x.png" class="profile-img">
+        <img src="cmcevywpp2jfskc0dz28u3g9m8v8x.png" class="profile-img" alt="عمران">
         <h1>عمران</h1>
         <p>مرحباً بك في موقعي الشخصي</p>
         <a href="#" class="btn">تواصل معي</a>
