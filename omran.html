@@ -8,7 +8,7 @@
         body {
             background-color: #050505;
             color: white;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,7 +16,7 @@
             margin: 0;
             text-align: center;
         }
-        /* خلفية النقاط اللي تحبها */
+        /* خلفية النقاط الملكية */
         body::before {
             content: "";
             position: absolute;
@@ -33,6 +33,11 @@
             backdrop-filter: blur(15px);
             max-width: 380px;
             width: 90%;
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .profile-img {
             width: 180px;
@@ -41,6 +46,7 @@
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         h1 { margin: 10px 0; font-size: 2.5rem; font-weight: bold; }
         p { color: #888; margin-bottom: 30px; font-size: 1.1rem; }
@@ -52,15 +58,14 @@
             text-decoration: none;
             border-radius: 15px;
             font-weight: bold;
-            font-size: 1rem;
             transition: 0.3s;
         }
-        .btn:hover { background: #dddddd; transform: translateY(-3px); }
+        .btn:hover { background: #ddd; transform: translateY(-3px); }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="https://telegra.ph/file/bc7433842f9a746537b80.jpg" class="profile-img" alt="عمران">
+        <img src="me.jpg" class="profile-img" alt="عمران">
         <h1>عمران</h1>
         <p>مرحباً بك في موقعي الشخصي</p>
         <a href="mailto:omran@example.com" class="btn">تواصل معي</a>
