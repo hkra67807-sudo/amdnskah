@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الابتسامة 3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #e0e5ec;
+            --primary: #0e8a8a;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+        }
+
+        body { 
+            background-color: var(--bg); 
+            font-family: 'Changa', sans-serif; 
+            margin: 0; padding: 10px;
+        }
+
+        /* حاوية بتصميم 3D */
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        /* نافبار 3D */
+        .navbar {
+            display: flex; justify-content: space-around;
+            background: var(--bg);
+            padding: 15px; border-radius: 20px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            margin-bottom: 30px;
+        }
+        .navbar a { text-decoration: none; color: var(--primary); font-weight: bold; cursor: pointer; }
+
+        /* البطاقات ثلاثية الأبعاد */
+        .card-3d {
+            background: var(--bg);
+            padding: 25px; border-radius: 30px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+            text-align: center; margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        /* تأثير الصورة المجسمة */
+        .doctor-avatar {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            background: var(--bg);
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+            padding: 10px; margin: auto;
+        }
+        .doctor-avatar img { width: 100%; border-radius: 50%; filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.2)); }
+
+        /* أزرار 3D تضغط للداخل */
+        .btn-3d {
+            background: var(--bg);
+            border: none; padding: 12px 30px; border-radius: 15px;
+            color: var(--primary); font-weight: bold; font-family: 'Changa';
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            cursor: pointer; transition: 0.2s; width: 100%; margin-top: 10px;
+        }
+        .btn-3d:active {
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            transform: scale(0.98);
+        }
+
+        /* مدخلات النصوص 3D */
+        input {
+            width: 100%; border: none; padding: 15px; border-radius: 15px;
+            background: var(--bg); box-sizing: border-box;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            margin-bottom: 15px; font-family: 'Changa'; outline: none;
+        }
+
+        .page { display: none; }
+        .active-page { display: block; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar">
+        <a onclick="show('home')">الرئيسية</a>
+        <a onclick="show('services')">الخدمات</a>
+        <a onclick="show('book')">حجز</a>
+    </nav>
+
+    <div id="home" class="page active-page">
+        <div class="card-3d">
+            <div class="doctor-avatar">
+                <img src="https://cdn-icons-png.flaticon.com/512/3843/3843322.png" alt="Doctor">
+            </div>
+            <h2 style="color: var(--primary);">أهلاً بك في عالم الابتسامة</h2>
+            <p>عيادة متطورة بأحدث تقنيات الـ 3D</p>
+            <button class="btn-3d" onclick="show('services')">ابدأ رحلتك</button>
+        </div>
+    </div>
+
+    <div id="services" class="page">
+        <div class="card-3d">
+            <h3>🦷 تنظيف وتلميع</h3>
+            <button class="btn-3d" onclick="show('book')">حجز موعد</button>
+        </div>
+        <div class="card-3d">
+            <h3>💎 تبييض ليزر</h3>
+            <button class="btn-3d" onclick="show('book')">حجز موعد</button>
+        </div>
+    </div>
+
+    <div id="book" class="page">
+        <div class="card-3d">
+            <h3>بيانات الحجز 📅</h3>
+            <input type="text" id="name" placeholder="اسمك الكريم">
+            <input type="tel" id="phone" placeholder="رقم موبايلك">
+            <button class="btn-3d" style="background: #25D366; color: white;" onclick="send()">إرسال واتساب</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function show(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
+    }
+    function send() {
+        const n = document.getElementById('name').value;
+        const p = document.getElementById('phone').value;
+        if(!n || !p) { alert("امسح البيانات واملأها من جديد"); return; }
+        window.open(`https://wa.me/9647747231856?text=حجز جديد: ${n} - ${p}`);
+    }
+</script>
+
+</body>
+</html>
