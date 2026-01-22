@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عمران | Omran</title>
+    <link rel="icon" href="https://github.com/hkra67807-sudo.png">
     <style>
-        /* إعدادات الخط والألوان الأساسية */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #050505; /* أسود ملكي */
+            background-color: #050505;
             color: #ffffff;
             margin: 0;
             display: flex;
@@ -19,98 +19,90 @@
             text-align: center;
         }
 
-        /* تأثير الخلفية المتدرجة الهادئة */
+        /* خلفية بنقاط ناعمة تشبه التي في لقطة الشاشة */
         body::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
             z-index: -1;
         }
 
         .container {
             padding: 40px;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.03);
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            animation: fadeIn 1.5s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* تنسيق صورتك الشخصية الجديدة */
+        /* تنسيق صورتك الفخمة بالبدلة */
         .profile-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 35px; /* حواف دائرية ناعمة وليست دائرة كاملة لتعطي فخامة */
+            width: 160px;
+            height: 160px;
+            border-radius: 35px;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: 0.5s;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05);
-            border-color: #ffffff;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin: 0;
-            letter-spacing: 1px;
-            font-weight: 700;
-            background: linear-gradient(to bottom, #ffffff 0%, #a1a1a1 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
         p {
-            font-size: 1rem;
-            color: #888;
-            margin: 15px 0 35px;
-            line-height: 1.8;
-            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+            color: #888888;
+            margin: 15px 0 30px;
+            line-height: 1.6;
         }
 
         .links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .btn {
-            padding: 15px;
+            padding: 14px;
             color: #000;
             background: #ffffff;
             text-decoration: none;
-            border-radius: 15px;
+            border-radius: 16px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: 0.4s;
-            text-transform: uppercase;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn:hover {
-            background: #cccccc;
-            transform: translateY(-5px);
+            background: #e0e0e0;
+            transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(255,255,255,0.1);
         }
 
         .btn-outline {
             background: transparent;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border-color: #ffffff;
         }
     </style>
@@ -120,11 +112,11 @@
         <img src="https://r.jina.ai/i/0f33e0705a6146c2bc4a08bc74116f19" alt="عمران" class="profile-img">
         
         <h1>عمران</h1>
-        <p>مرحباً بك في المساحة الخاصة بي. أهتم بكل ما هو رقمي، مبتكر، ومختلف.</p>
+        <p>مرحباً بك في موقعي التعريفي. أنا مهتم ببناء المشاريع الرقمية ومشاركة المعرفة التقنية على GitHub.</p>
         
         <div class="links">
             <a href="https://github.com/hkra67807-sudo" class="btn">GitHub Profile</a>
-            <a href="mailto:your-email@example.com" class="btn btn-outline">ارسل رسالة</a>
+            <a href="mailto:your-email@example.com" class="btn btn-outline">تواصل معي</a>
         </div>
     </div>
 </body>
