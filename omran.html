@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #050505;
+            background-color: #080a12; /* لون غامق فخم */
             color: #ffffff;
             margin: 0;
             display: flex;
@@ -18,7 +18,7 @@
             text-align: center;
         }
 
-        /* خلفية النجوم أو النقاط كما طلبت */
+        /* خلفية النقاط اللي كانت تظهر عندك بالصور */
         body::before {
             content: "";
             position: absolute;
@@ -31,42 +31,41 @@
         .container {
             padding: 40px;
             max-width: 400px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
 
-        /* تنسيق الصورة الشخصية باستخدام الرابط المباشر */
+        /* تنسيق صورتك الشخصية بالبدلة */
         .profile-img {
             width: 180px;
             height: 180px;
-            border-radius: 30px;
+            border-radius: 35px; /* حواف دائرية ناعمة */
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 25px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             margin: 0;
-            color: #ffffff;
-            font-weight: 700;
+            background: linear-gradient(to bottom, #ffffff 0%, #a1a1a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p {
             font-size: 1rem;
-            color: #888;
-            margin: 15px 0 30px;
+            color: #94a3b8;
+            margin: 15px 0 35px;
         }
 
         .btn {
             display: block;
-            padding: 14px;
+            padding: 15px;
             color: #000;
             background: #ffffff;
             text-decoration: none;
@@ -76,7 +75,8 @@
         }
 
         .btn:hover {
-            background: #ddd;
+            background: #cccccc;
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -84,8 +84,8 @@
     <div class="container">
         <img src="https://r.jina.ai/i/0f33e0705a6146c2bc4a08bc74116f19" alt="عمران" class="profile-img">
         
-        <h1>عمران</h1>
-        <p>مرحباً بك في موقعي الشخصي.</p>
+        <h1>أهلاً، أنا عمران</h1>
+        <p>مرحباً بك في موقعي الشخصي التعريفي.</p>
         
         <a href="mailto:contact@omran.com" class="btn">تواصل معي</a>
     </div>
