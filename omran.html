@@ -59,14 +59,7 @@ header {
 }
 header h1 { font-family: 'Montserrat', sans-serif; font-size: 3em; margin-bottom: 10px; }
 header p { font-size: 1.3em; color: #ccc; }
-
-/* Particles Background */
-#particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-}
+#particles-js { position: absolute; width: 100%; height: 100%; z-index: 0; }
 
 /* Sections */
 section {
@@ -79,7 +72,7 @@ section {
 }
 section h2 { color: #4CAF50; margin-bottom: 20px; font-family: 'Montserrat', sans-serif; }
 
-/* Project Cards 3D */
+/* Projects */
 .projects-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -103,8 +96,6 @@ section h2 { color: #4CAF50; margin-bottom: 20px; font-family: 'Montserrat', san
     margin-bottom: 15px;
     transition: transform 0.5s;
 }
-.project-card h3 { margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
-.project-card p { color: #ccc; }
 .project-card a { display: inline-block; margin-top: 10px; padding: 8px 15px; border-radius: 8px;
     background: linear-gradient(135deg, #4CAF50, #36D1DC);
     color: #fff;
@@ -121,6 +112,7 @@ section h2 { color: #4CAF50; margin-bottom: 20px; font-family: 'Montserrat', san
     .project-card img { height: 180px; }
 }
 </style>
+
 </head>
 <body>
 
@@ -172,33 +164,32 @@ section h2 { color: #4CAF50; margin-bottom: 20px; font-family: 'Montserrat', san
   <p>GitHub: <a href="#">رابط حسابك</a></p>
 </section>
 
-<!-- Scripts -->
 <script>
-  // تفعيل Vanilla Tilt
-  VanillaTilt.init(document.querySelectorAll(".project-card"));
+// Vanilla Tilt 3D effect
+VanillaTilt.init(document.querySelectorAll(".project-card"));
 
-  // تفعيل Particles.js
-  particlesJS("particles-js", {
-    "particles": {
-      "number": { "value": 50 },
-      "size": { "value": 3 },
-      "color": { "value": "#4CAF50" },
-      "line_linked": { "enable": true, "distance": 150, "color": "#4CAF50", "opacity": 0.4, "width": 1 },
-      "move": { "speed": 2 }
-    }
-  });
+// Particles background
+particlesJS("particles-js", {
+  "particles": {
+    "number": { "value": 50 },
+    "size": { "value": 3 },
+    "color": { "value": "#4CAF50" },
+    "line_linked": { "enable": true, "distance": 150, "color": "#4CAF50", "opacity": 0.4, "width": 1 },
+    "move": { "speed": 2 }
+  }
+});
 
-  // GSAP Animations
-  gsap.from("header h1", {duration: 1.5, y:-50, opacity:0, ease:"power3.out"});
-  gsap.from("header p", {duration: 1.5, y:50, opacity:0, delay:0.3, ease:"power3.out"});
-  gsap.from(".project-card", {
-      scrollTrigger: {trigger: ".projects-container", start:"top 80%"},
-      y:50,
-      opacity:0,
-      stagger:0.2,
-      duration:1,
-      ease:"power3.out"
-  });
+// GSAP Animations
+gsap.from("header h1", {duration: 1.5, y:-50, opacity:0, ease:"power3.out"});
+gsap.from("header p", {duration: 1.5, y:50, opacity:0, delay:0.3, ease:"power3.out"});
+gsap.from(".project-card", {
+    scrollTrigger: {trigger: ".projects-container", start:"top 80%"},
+    y:50,
+    opacity:0,
+    stagger:0.2,
+    duration:1,
+    ease:"power3.out"
+});
 </script>
 
 </body>
