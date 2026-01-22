@@ -10,10 +10,12 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #1f1f1f;
     color: #e0e0e0;
+    perspective: 1000px; /* ضروري للـ 3D */
   }
   a { color: #4CAF50; text-decoration: none; }
   a:hover { text-decoration: underline; }
 
+  /* شريط التنقل */
   nav {
     background-color: #333;
     display: flex;
@@ -25,6 +27,7 @@
   }
   nav a { margin: 0 20px; color: #fff; font-weight: bold; }
 
+  /* رأس الصفحة */
   header {
     background: #2c2c2c;
     text-align: center;
@@ -34,37 +37,49 @@
   header h1 { font-size: 3em; margin-bottom: 10px; }
   header p { font-size: 1.3em; color: #ccc; }
 
+  /* الأقسام */
   section {
     max-width: 900px;
     margin: 40px auto;
-    background: #2a2a2a;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   }
   section h2 { color: #4CAF50; margin-bottom: 20px; }
 
-  /* قسم المشروع الواحد */
+  /* قسم المشروع 3D */
   .project {
-    background: #3a3a3a;
+    background: #2a2a2a;
     padding: 20px;
     border-radius: 12px;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
   }
   .project:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+    transform: rotateY(15deg) rotateX(10deg) translateZ(20px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
   }
   .project img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 15px;
+    transition: transform 0.5s;
+  }
+  .project:hover img {
+    transform: scale(1.05);
   }
 
+  /* تواصل معي */
   .contact p { margin: 8px 0; color: #ccc; }
+
+  /* Responsive */
+  @media(max-width:600px){
+    header h1 { font-size: 2em; }
+    .project { transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -82,7 +97,7 @@
 
 <section id="about">
   <h2>عنّي</h2>
-  <p>أنا مطور ويب شغوف بالتصميم والتقنية. أحب بناء مواقع جميلة وعملية ومشاركة معرفتي مع الآخرين. أعمل على تطوير مهاراتي في HTML وCSS وJavaScript.</p>
+  <p>أنا مطور ويب شغوف بالتصميم والتقنية. أحب بناء مواقع جذابة وعملية وأشارك معرفتي مع الآخرين.</p>
 </section>
 
 <section id="project">
@@ -90,7 +105,7 @@
   <div class="project">
     <img src="https://i.imgur.com/6v5Rj0B.png" alt="مشروعي">
     <h3>مشروعي الرئيسي</h3>
-    <p>هذا المشروع يجمع كل أعمالي وتجربتي في تطوير الويب والتصميم. يمكنك زيارة المشروع عبر الرابط أدناه.</p>
+    <p>هذا المشروع يجمع كل أعمالي وتجربتي في تطوير الويب والتصميم. يمكن زيارة المشروع عبر الرابط أدناه.</p>
     <a href="#">زيارة المشروع</a>
   </div>
 </section>
