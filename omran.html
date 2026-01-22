@@ -15,7 +15,6 @@
             height: 100vh;
             margin: 0;
             text-align: center;
-            position: relative;
         }
         body::before {
             content: "";
@@ -33,7 +32,6 @@
             backdrop-filter: blur(15px);
             max-width: 380px;
             width: 90%;
-            z-index: 1;
         }
         .profile-img {
             width: 180px;
@@ -42,21 +40,18 @@
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        h1 { margin: 10px 0; font-size: 2.5rem; font-weight: bold; }
-        p { color: #888; margin-bottom: 30px; font-size: 1.1rem; }
+        h1 { margin: 10px 0; font-size: 2.5rem; font-weight: bold; display: block !important; }
+        p { color: #888; margin-bottom: 30px; }
         .btn {
             display: block;
             padding: 15px;
             background: #ffffff;
-            color: #000000;
+            color: #000;
             text-decoration: none;
             border-radius: 15px;
             font-weight: bold;
-            transition: 0.3s;
         }
-        .btn:hover { background: #ddd; transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -64,7 +59,7 @@
         <img src="cmcevywpp2jfskc0dz28u3g9m8v8x.png" class="profile-img" alt="عمران">
         <h1>عمران</h1>
         <p>مرحباً بك في موقعي الشخصي</p>
-        <a href="mailto:omran@example.com" class="btn">تواصل معي</a>
+        <a href="mailto:contact@omran.com" class="btn">تواصل معي</a>
     </div>
 </body>
 </html>
