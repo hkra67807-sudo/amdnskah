@@ -3,51 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omran | عمران</title>
+    <title>عمران | Omran</title>
     <style>
         body {
-            background-color: #000000;
+            background-color: #050505;
             color: white;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-        }
-        .main-box {
-            border: 1px solid #333;
-            padding: 50px;
-            border-radius: 20px;
-            background: #0a0a0a;
             text-align: center;
         }
-        .my-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 20px;
-            object-fit: cover;
-            border: 2px solid #fff;
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 350px;
         }
-        h1 { font-size: 40px; margin-top: 20px; }
-        .btn-call {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 30px;
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 25px;
+            object-fit: cover;
+            border: 1px solid #fff;
+            margin-bottom: 20px;
+        }
+        h1 { margin: 10px 0; font-size: 2rem; }
+        p { color: #888; margin-bottom: 30px; }
+        .btn {
+            display: block;
+            padding: 12px;
             background: #fff;
             color: #000;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="main-box">
-        <img src="https://r.jina.ai/i/0f33e0705a6146c2bc4a08bc74116f19" class="my-photo">
+    <div class="card">
+        <img src="https://r.jina.ai/i/0f33e0705a6146c2bc4a08bc74116f19" class="profile-img" alt="عمران">
         <h1>عمران</h1>
-        <p>مرحباً بكم في موقعي الرسمي</p>
-        <a href="#" class="btn-call">تواصل معي</a>
+        <p>مرحباً بك في موقعي الشخصي</p>
+        <a href="mailto:contact@omran.com" class="btn">تواصل معي</a>
     </div>
 </body>
 </html>
