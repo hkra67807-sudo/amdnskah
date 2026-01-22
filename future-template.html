@@ -113,15 +113,30 @@ nav a:hover{opacity:1;}
   margin-top:20px;
 }
 
-.hero-card img.hero-img{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  object-fit:cover;
-  margin-top:15px;
-  border:3px solid var(--main);
+/* ===== صورة البطل متجاوبة وغير منكسرة ===== */
+.hero-img-container {
+  width: 200px;          /* عرض الحاوية */
+  height: 200px;         /* ارتفاع ثابت للحفاظ على النسبة */
+  margin: 15px auto 0;
+  overflow: hidden;
+  border-radius: 50%;    /* شكل دائري */
+  border: 3px solid var(--main);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
+.hero-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* الصورة تغطي الحاوية بدون تشويه */
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.hero-img-container img:hover {
+  transform: scale(1.05); /* تأثير تكبير عند المرور */
+}
+
+/* ===== باقي الأقسام ===== */
 .section{
   padding:60px 20px;
 }
@@ -194,9 +209,11 @@ footer{
   <div class="hero-card">
     <h3>🚀 قالب المستقبل</h3>
     <p>HTML - CSS - Responsive</p>
-    <!-- رابط الصورة النسبي -->
-    <img src="images/cmcevywpp2jfskc0dz28u3g9m-lora-2-0.png" 
-         alt="قالب المستقبل" class="hero-img">
+    <!-- الصورة الآن متجاوبة وغير منكسرة -->
+    <div class="hero-img-container">
+      <img src="https://i.ibb.co/xSbYhRTg/cmcevywpp2jfskc0dz28u3g9m-lora-2-0.png" 
+           alt="قالب المستقبل" class="hero-img">
+    </div>
   </div>
 </section>
 
