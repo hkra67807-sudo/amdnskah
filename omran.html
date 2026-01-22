@@ -2,195 +2,166 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
+<title>Omran | Web Developer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحة عني - عمر</title>
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-
-<!-- GSAP & ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-
-<!-- Three.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<!-- Vanilla Tilt -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
-
-<!-- Particles.js -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-/* Fonts & Base */
-body {
-    margin:0; padding:0;
-    font-family: 'Poppins', sans-serif;
-    background: #0d0d0d;
-    color: #f5f5f5;
-    overflow-x: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Cairo',sans-serif;
 }
-a { color: #4CAF50; text-decoration: none; }
-a:hover { text-decoration: underline; }
 
-/* Navbar */
-nav {
-    background-color: #111;
-    display: flex;
-    justify-content: center;
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+body{
+    background:#0f172a;
+    color:white;
 }
-nav a { margin: 0 20px; font-weight: 600; }
 
-/* Header */
-header {
-    position: relative;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(135deg, #121212, #1a1a1a);
-    color: #f5f5f5;
+header{
+    padding:20px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
-header h1 { font-family: 'Montserrat', sans-serif; font-size: 3em; margin-bottom: 10px; }
-header p { font-size: 1.3em; color: #ccc; }
-#particles-js { position: absolute; width: 100%; height: 100%; z-index: 0; }
 
-/* Sections */
-section {
-    max-width: 1000px;
-    margin: 60px auto;
-    padding: 30px;
-    border-radius: 12px;
-    position: relative;
-    z-index: 1;
+header h1{
+    color:#38bdf8;
 }
-section h2 { color: #4CAF50; margin-bottom: 20px; font-family: 'Montserrat', sans-serif; }
 
-/* Projects */
-.projects-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+nav a{
+    color:white;
+    margin-left:20px;
+    text-decoration:none;
 }
-.project-card {
-    background: linear-gradient(145deg, #1c1c1c, #121212);
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    transition: transform 0.5s, box-shadow 0.5s;
-    cursor: pointer;
-    transform-style: preserve-3d;
-}
-.project-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    transition: transform 0.5s;
-}
-.project-card a { display: inline-block; margin-top: 10px; padding: 8px 15px; border-radius: 8px;
-    background: linear-gradient(135deg, #4CAF50, #36D1DC);
-    color: #fff;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.project-card a:hover { transform: scale(1.1); box-shadow: 0 5px 20px rgba(0,255,255,0.5); }
 
-/* Contact */
-.contact p { margin: 8px 0; color: #ccc; }
+.hero{
+    min-height:80vh;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:60px;
+}
 
-/* Responsive */
-@media(max-width:600px){
-    header h1 { font-size: 2em; }
-    .project-card img { height: 180px; }
+.hero-text{
+    max-width:500px;
+}
+
+.hero-text h2{
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+.hero-text span{
+    color:#38bdf8;
+}
+
+.hero-text p{
+    line-height:1.7;
+    opacity:.8;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 30px;
+    background:#38bdf8;
+    color:black;
+    border-radius:30px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.1);
+}
+
+.card{
+    background:#020617;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 0 40px #38bdf855;
+}
+
+.section{
+    padding:60px;
+}
+
+.services{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.service{
+    background:#020617;
+    padding:25px;
+    border-radius:15px;
+    transition:.3s;
+}
+
+.service:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #38bdf8;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    opacity:.6;
+}
+
+@media(max-width:768px){
+    .hero{
+        flex-direction:column;
+        text-align:center;
+    }
 }
 </style>
-
 </head>
+
 <body>
 
-<!-- Navbar -->
-<nav>
-  <a href="#about">عنّي</a>
-  <a href="#projects">مشاريعي</a>
-  <a href="#contact">تواصل معي</a>
-</nav>
-
-<!-- Header -->
 <header>
-  <div id="particles-js"></div>
-  <h1>مرحباً، أنا عمر</h1>
-  <p>مطور ويب | مصمم | واجهات احترافية 3D</p>
+    <h1>Omran</h1>
+    <nav>
+        <a href="#">الرئيسية</a>
+        <a href="#">خدماتي</a>
+        <a href="#">تواصل</a>
+    </nav>
 </header>
 
-<!-- About -->
-<section id="about">
-  <h2>عنّي</h2>
-  <p>أنا مطور ويب شغوف بالتصميم والبرمجة الحديثة، أستخدم أحدث المكتبات لإنتاج مواقع جذابة وتفاعلية بالكامل.</p>
-</section>
-
-<!-- Projects -->
-<section id="projects">
-  <h2>مشاريعي</h2>
-  <div class="projects-container">
-    <div class="project-card" data-tilt data-tilt-max="20" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.4">
-      <img src="https://i.imgur.com/6v5Rj0B.png" alt="مشروعي 1">
-      <h3>مشروعي الرئيسي</h3>
-      <p>مشروع احترافي يجمع كل أعمالي في تطوير الويب والتصميم الحديث.</p>
-      <a href="#">زيارة المشروع</a>
+<section class="hero">
+    <div class="hero-text">
+        <h2>أنا <span>مبرمج مواقع</span></h2>
+        <p>
+        أصمم لك موقع احترافي سريع ومتجاوب مع جميع الأجهزة وبشكل عصري.
+        </p>
+        <a class="btn" href="#">تواصل معي</a>
     </div>
-    <div class="project-card" data-tilt data-tilt-max="20" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.4">
-      <img src="https://i.imgur.com/6v5Rj0B.png" alt="مشروعي 2">
-      <h3>مشاريع تجريبية</h3>
-      <p>تجارب ومهارات حديثة تم تطبيقها ضمن تطوير الويب الحديث.</p>
-      <a href="#">زيارة المشروع</a>
+
+    <div class="card">
+        <h3>💻 Web Developer</h3>
+        <p>HTML - CSS - JavaScript</p>
     </div>
-  </div>
 </section>
 
-<!-- Contact -->
-<section id="contact" class="contact">
-  <h2>تواصل معي</h2>
-  <p>البريد الإلكتروني: <a href="mailto:your@email.com">your@email.com</a></p>
-  <p>الهاتف: 123456789</p>
-  <p>LinkedIn: <a href="#">رابط حسابك</a></p>
-  <p>GitHub: <a href="#">رابط حسابك</a></p>
+<section class="section">
+    <h2>خدماتي</h2>
+    <br>
+    <div class="services">
+        <div class="service">تصميم Landing Page</div>
+        <div class="service">مواقع تعريفية</div>
+        <div class="service">تعديل مواقع</div>
+        <div class="service">تحسين السرعة</div>
+    </div>
 </section>
 
-<script>
-// Vanilla Tilt 3D effect
-VanillaTilt.init(document.querySelectorAll(".project-card"));
-
-// Particles background
-particlesJS("particles-js", {
-  "particles": {
-    "number": { "value": 50 },
-    "size": { "value": 3 },
-    "color": { "value": "#4CAF50" },
-    "line_linked": { "enable": true, "distance": 150, "color": "#4CAF50", "opacity": 0.4, "width": 1 },
-    "move": { "speed": 2 }
-  }
-});
-
-// GSAP Animations
-gsap.from("header h1", {duration: 1.5, y:-50, opacity:0, ease:"power3.out"});
-gsap.from("header p", {duration: 1.5, y:50, opacity:0, delay:0.3, ease:"power3.out"});
-gsap.from(".project-card", {
-    scrollTrigger: {trigger: ".projects-container", start:"top 80%"},
-    y:50,
-    opacity:0,
-    stagger:0.2,
-    duration:1,
-    ease:"power3.out"
-});
-</script>
+<footer>
+    © 2026 Omran
+</footer>
 
 </body>
 </html>
