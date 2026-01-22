@@ -47,6 +47,21 @@ nav a{
 
 nav a:hover{opacity:1;}
 
+.social{
+  display:flex;
+  align-items:center;
+}
+
+.social a img{
+  width:30px;
+  margin-left:10px;
+  transition: transform 0.3s;
+}
+
+.social a img:hover{
+  transform: scale(1.2);
+}
+
 .hero{
   min-height:85vh;
   display:flex;
@@ -141,6 +156,11 @@ footer{
     <a href="#">المميزات</a>
     <a href="#">تواصل</a>
   </nav>
+  <div class="social">
+    <a href="https://www.instagram.com/ha_vo20" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
+    </a>
+  </div>
 </header>
 
 <section class="hero">
@@ -169,7 +189,11 @@ footer{
 </section>
 
 <footer>
-  © 2026 عمران مجيب
+  <p>تابعني على إنستجرام:</p>
+  <a href="https://www.instagram.com/ha_vo20" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="30">
+  </a>
+  <p>© 2026 عمران مجيب</p>
 </footer>
 
 </body>
