@@ -3,72 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحة عني</title>
+<title>صفحة عني - عمر</title>
 <style>
+  /* خطوط وألوان داكنة */
   body {
+    margin: 0; padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin:0; padding:0;
-    background: linear-gradient(to right, #74ebd5, #ACB6E5);
-    color: #333;
+    background: #1f1f1f; /* غامق رصاصي */
+    color: #e0e0e0;      /* نص فاتح للقراءة */
   }
-  header {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: rgba(255,255,255,0.2);
+  a { text-decoration: none; color: #4CAF50; }
+  a:hover { text-decoration: underline; }
+
+  /* شريط التنقل */
+  nav {
+    background-color: #333; /* داكن */
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    margin: 0 20px;
     color: #fff;
+    font-weight: bold;
   }
-  header h1 {
-    font-size: 3em;
-    margin-bottom: 10px;
+
+  /* رأس الصفحة */
+  header {
+    background: #2c2c2c; /* داكن غامق */
+    color: #fff;
+    text-align: center;
+    padding: 80px 20px;
   }
-  header p {
-    font-size: 1.2em;
-  }
+  header h1 { font-size: 3em; margin-bottom: 10px; }
+  header p { font-size: 1.3em; color: #ccc; }
+
+  /* الأقسام */
   section {
-    max-width: 800px;
+    max-width: 900px;
     margin: 40px auto;
-    background-color: rgba(255,255,255,0.8);
+    background: #2a2a2a; /* خلفية داكنة للبطاقات */
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   }
-  h2 {
-    color: #4CAF50;
-    margin-bottom: 15px;
+  section h2 { color: #4CAF50; margin-bottom: 20px; }
+
+  /* معرض المشاريع */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
   }
-  a {
-    color: #4CAF50;
-    text-decoration: none;
+  .project-card {
+    background: #3a3a3a;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
-  ul li {
-    margin: 10px 0;
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
   }
+
+  /* تواصل معي */
+  .contact p { margin: 8px 0; color: #ccc; }
 </style>
 </head>
 <body>
 
+<!-- شريط التنقل -->
+<nav>
+  <a href="#about">عنّي</a>
+  <a href="#projects">مشاريعي</a>
+  <a href="#contact">تواصل معي</a>
+</nav>
+
+<!-- رأس الصفحة -->
 <header>
   <h1>مرحباً، أنا عمر</h1>
   <p>مطور ويب | مصمم | مهتم بالتقنية</p>
 </header>
 
-<section>
+<!-- قسم عنّي -->
+<section id="about">
   <h2>عنّي</h2>
-  <p>هذه الصفحة تعرف الزائر بي وبمهاراتي ومشاريعي. يمكنك تعديل النص حسب ما تريد.</p>
+  <p>أنا مطور ويب شغوف بالتصميم والتقنية. أحب بناء مواقع جميلة وعملية، ومشاركة معرفتي مع الآخرين. أعمل على تطوير مهاراتي في HTML، CSS، JavaScript، وأحب تجربة كل جديد في عالم التقنية.</p>
 </section>
 
-<section>
+<!-- قسم المشاريع -->
+<section id="projects">
   <h2>مشاريعي</h2>
-  <ul>
-    <li><a href="#">مشروع 1</a></li>
-    <li><a href="#">مشروع 2</a></li>
-    <li><a href="#">مشروع 3</a></li>
-  </ul>
+  <div class="projects">
+    <div class="project-card">
+      <h3>مشروع 1</h3>
+      <p>وصف مختصر للمشروع الأول.</p>
+      <a href="#">رابط المشروع</a>
+    </div>
+    <div class="project-card">
+      <h3>مشروع 2</h3>
+      <p>وصف مختصر للمشروع الثاني.</p>
+      <a href="#">رابط المشروع</a>
+    </div>
+    <div class="project-card">
+      <h3>مشروع 3</h3>
+      <p>وصف مختصر للمشروع الثالث.</p>
+      <a href="#">رابط المشروع</a>
+    </div>
+  </div>
 </section>
 
-<section>
+<!-- قسم التواصل -->
+<section id="contact" class="contact">
   <h2>تواصل معي</h2>
-  <p>البريد الإلكتروني: your@email.com</p>
-  <p>هاتف: 123456789</p>
+  <p>البريد الإلكتروني: <a href="mailto:your@email.com">your@email.com</a></p>
+  <p>الهاتف: 123456789</p>
+  <p>LinkedIn: <a href="#">رابط حسابك</a></p>
+  <p>GitHub: <a href="#">رابط حسابك</a></p>
 </section>
 
 </body>
