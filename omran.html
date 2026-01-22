@@ -4,89 +4,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>صفحة عني - عمر</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.css">
 <style>
-  body {
+body {
     margin:0; padding:0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #1f1f1f;
     color: #e0e0e0;
-    perspective: 1000px; /* ضروري للـ 3D */
-  }
-  a { color: #4CAF50; text-decoration: none; }
-  a:hover { text-decoration: underline; }
+}
+a { color: #4CAF50; text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-  /* شريط التنقل */
-  nav {
-    background-color: #333;
+/* شريط التنقل */
+nav {
+    background-color: #222;
     display: flex;
     justify-content: center;
     padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 100;
-  }
-  nav a { margin: 0 20px; color: #fff; font-weight: bold; }
+}
+nav a { margin: 0 20px; color: #fff; font-weight: bold; }
 
-  /* رأس الصفحة */
-  header {
-    background: #2c2c2c;
+/* رأس الصفحة */
+header {
+    background: linear-gradient(135deg, #2c2c2c, #3a3a3a);
     text-align: center;
-    padding: 80px 20px;
+    padding: 100px 20px;
     color: #fff;
-  }
-  header h1 { font-size: 3em; margin-bottom: 10px; }
-  header p { font-size: 1.3em; color: #ccc; }
+}
+header h1 { font-size: 3em; margin-bottom: 10px; }
+header p { font-size: 1.3em; color: #ccc; }
 
-  /* الأقسام */
-  section {
-    max-width: 900px;
+/* الأقسام */
+section {
+    max-width: 1000px;
     margin: 40px auto;
     padding: 30px;
     border-radius: 12px;
-  }
-  section h2 { color: #4CAF50; margin-bottom: 20px; }
+}
+section h2 { color: #4CAF50; margin-bottom: 20px; }
 
-  /* قسم المشروع 3D */
-  .project {
-    background: #2a2a2a;
+/* مشروع 3D */
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.project-card {
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 15px;
+    box-shadow: 8px 8px 20px #171717, -8px -8px 20px #2e2e2e;
     text-align: center;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-    transform-style: preserve-3d;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-  }
-  .project:hover {
-    transform: rotateY(15deg) rotateX(10deg) translateZ(20px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-  }
-  .project img {
+    transition: transform 0.4s, box-shadow 0.4s;
+    cursor: pointer;
+}
+.project-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 15px;
-    transition: transform 0.5s;
-  }
-  .project:hover img {
-    transform: scale(1.05);
-  }
+    transition: transform 0.4s;
+}
+.project-card h3 { margin-bottom: 10px; }
+.project-card p { color: #ccc; }
+.project-card a { display: inline-block; margin-top: 10px; color: #4CAF50; }
 
-  /* تواصل معي */
-  .contact p { margin: 8px 0; color: #ccc; }
+/* Contact */
+.contact p { margin: 8px 0; color: #ccc; }
 
-  /* Responsive */
-  @media(max-width:600px){
+/* Responsive */
+@media(max-width:600px){
     header h1 { font-size: 2em; }
-    .project { transform: none; }
-  }
+}
 </style>
 </head>
 <body>
 
 <nav>
   <a href="#about">عنّي</a>
-  <a href="#project">مشروعي</a>
+  <a href="#projects">مشاريعي</a>
   <a href="#contact">تواصل معي</a>
 </nav>
 
@@ -100,13 +101,21 @@
   <p>أنا مطور ويب شغوف بالتصميم والتقنية. أحب بناء مواقع جذابة وعملية وأشارك معرفتي مع الآخرين.</p>
 </section>
 
-<section id="project">
-  <h2>مشروعي</h2>
-  <div class="project">
-    <img src="https://i.imgur.com/6v5Rj0B.png" alt="مشروعي">
-    <h3>مشروعي الرئيسي</h3>
-    <p>هذا المشروع يجمع كل أعمالي وتجربتي في تطوير الويب والتصميم. يمكن زيارة المشروع عبر الرابط أدناه.</p>
-    <a href="#">زيارة المشروع</a>
+<section id="projects">
+  <h2>مشاريعي</h2>
+  <div class="projects-container">
+    <div class="project-card" data-tilt data-tilt-max="25" data-tilt-speed="400">
+      <img src="https://i.imgur.com/6v5Rj0B.png" alt="مشروع 1">
+      <h3>مشروعي الرئيسي</h3>
+      <p>هذا المشروع يجمع كل أعمالي وتجربتي في تطوير الويب والتصميم.</p>
+      <a href="#">زيارة المشروع</a>
+    </div>
+    <div class="project-card" data-tilt data-tilt-max="25" data-tilt-speed="400">
+      <img src="https://i.imgur.com/6v5Rj0B.png" alt="مشروع 2">
+      <h3>مشروع ثانوي</h3>
+      <p>مشاريع تجريبية ومهارات حديثة قمت بتطبيقها.</p>
+      <a href="#">زيارة المشروع</a>
+    </div>
   </div>
 </section>
 
@@ -117,6 +126,17 @@
   <p>LinkedIn: <a href="#">رابط حسابك</a></p>
   <p>GitHub: <a href="#">رابط حسابك</a></p>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+<script>
+  // تفعيل تأثير 3D على البطاقات
+  VanillaTilt.init(document.querySelectorAll(".project-card"), {
+      max: 25,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.3,
+  });
+</script>
 
 </body>
 </html>
